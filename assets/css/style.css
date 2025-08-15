@@ -1,3 +1,10 @@
+.instagram-link img {
+  transition: transform 0.3s ease;
+}
+
+.instagram-link img:hover {
+  transform: scale(1.1);
+}
 .tripadvisor-badge {
   background: #fdfcf8;
   border: 2px solid #2a6b3e;
