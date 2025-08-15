@@ -29,12 +29,7 @@
 .tripadvisor-badge img:hover {
   transform: scale(1.05);
 }
-.instagram-link img {
-  transition: transform 0.3s ease;
-}
 
-.instagram-link img:hover {
-  transform: scale(1.1);
 }
 body {
   font-family: Arial, sans-serif;
