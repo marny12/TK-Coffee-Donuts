@@ -29,7 +29,29 @@
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+<!-- Place this <style> in the <head> -->
+<style>
+  .tk-announcement {
+    background:#ffe9f2; /* soft pink */
+    color:#3a2f2b;      /* coffee brown */
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-size:14px;
+    line-height:1.4;
+    text-align:center;
+    padding:10px 12px;
+    border-bottom:1px solid #f3d3de;
+  }
+  .tk-announcement a {
+    color:#1a73e8; /* standard link color for neutrality */
+    text-decoration:underline;
+  }
+</style>
 
+<!-- Place this just inside <body> -->
+<div class="tk-announcement" role="status" aria-live="polite">
+  TK Coffee & Donuts is now available on Uber Eats.
+  <a href="https://www.ubereats.com/store-browse-uuid/41864a1a-0d0d-4857-90ad-71a658b3d3d1?diningMode=DELIVERY" target="_blank" rel="noopener">View menu</a>
+</div>
   <header>
     <img src="logo.jpg" alt="TK Coffee & Donuts Logo" style="max-width: 400px; display: block; margin: auto;">
     <h1>Welcome to TK Coffee & Donuts</h1>
