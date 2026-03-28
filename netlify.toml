@@ -5,3 +5,8 @@
   from = "/api/chat"
   to = "/.netlify/functions/chat"
   status = 200
+
+[[redirects]]
+  from = "/api/square-payment"
+  to = "/.netlify/functions/square-payment"
+  status = 200

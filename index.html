@@ -1045,11 +1045,14 @@ div[style*=“grid-template-columns:1fr 1fr 1fr”]{grid-template-columns:1fr!im
 function showTab(name){
   document.querySelectorAll('.tab-pane').forEach(el=>el.style.display='none');
   document.querySelectorAll('.menu-tab').forEach(el=>el.classList.remove('active-tab'));
-  document.getElementById('tab-content-'+name).style.display='block';
+  var pane=document.getElementById('tab-content-'+name);
+  pane.style.display='block';
   document.getElementById('tab-'+name).classList.add('active-tab');
+  pane.querySelectorAll('.reveal').forEach(function(el){el.classList.add('visible');});
 }
 </script>
 
+<script src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
 </head>
 <body>
 
@@ -1367,6 +1370,9 @@ document.addEventListener("DOMContentLoaded", () => {
     <div class="mhdr reveal" style="margin-top:24px;"><span>Fancy</span><span>Each</span><span>Dozen</span></div>
     <div id="menu-donuts-fancy"></div>
     <div class="mpromo reveal">🎉 Any dozen on donuts — 10% OFF!</div>
+    <div style="text-align:center; margin-top:32px; padding:24px 0;" class="reveal">
+      <a href="#order-online" class="btn-primary" style="width:fit-content; display:inline-block; padding:16px 48px; font-size:1.1rem; letter-spacing:0.06em;">🛒 Place Your Order</a>
+    </div>
   </div>
 
   <!-- DRINKS -->
@@ -1417,6 +1423,9 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="addon-item">· Coconut Milk</div>
       </div>
     </div>
+    <div style="text-align:center; margin-top:32px; padding:24px 0;" class="reveal">
+      <a href="#order-online" class="btn-primary" style="width:fit-content; display:inline-block; padding:16px 48px; font-size:1.1rem; letter-spacing:0.06em;">🛒 Place Your Order</a>
+    </div>
   </div>
 
   <!-- BREAKFAST -->
@@ -1429,15 +1438,18 @@ document.addEventListener("DOMContentLoaded", () => {
     <div class="mhdr reveal"><span>Item</span><span>Price</span></div>
     <div id="menu-breakfast-croissant"></div>
     <div class="mpromo reveal">🎉 Any dozen on breakfast — 10% OFF!</div>
+    <div style="text-align:center; margin-top:32px; padding:24px 0;" class="reveal">
+      <a href="#order-online" class="btn-primary" style="width:fit-content; display:inline-block; padding:16px 48px; font-size:1.1rem; letter-spacing:0.06em;">🛒 Place Your Order</a>
+    </div>
   </div>
 </section>
 
 <!-- ORDER PLATFORMS -->
 
-<section id="order" class="platforms-section" style="background:#fff;">
+<section id="order" class="platforms-section" style="background:#1c0a03; padding:80px 40px;">
   <div class="reveal">
     <div class="section-tag">Order Online</div>
-    <h2 class="section-title">Skip the Line</h2>
+    <h2 class="section-title" style="color:#FFF6E8;">Skip the Line</h2>
     <p style="color:rgba(255,248,238,0.55); margin-top:14px; max-width:440px; margin-left:auto; margin-right:auto; line-height:1.7;">
       Order ahead on your favorite platform and pick up fresh — or get it delivered to your door.
     </p>
@@ -1471,13 +1483,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:24px; max-width:900px; margin:0 auto 60px;" class="reveal">
 
-```
 <!-- ONLINE CHECKOUT -->
 <div class="pay-card">
   <div class="pay-icon" style="background:linear-gradient(135deg,#FF5E00,#FFD600);">🛒</div>
   <h3 class="pay-title">Order &amp; Pay Online</h3>
   <p class="pay-desc">Place your order directly and pay securely via Square. Ready for pickup — no waiting in line.</p>
-  <a href="https://squareup.com" target="_blank" class="btn-primary" style="display:block; text-align:center; margin-top:auto;">Order Now →</a>
+  <button onclick="openSquarePayment()" class="btn-primary" style="display:block; text-align:center; margin-top:auto; width:100%; font-family:'DM Sans',sans-serif;">Pay with Square →</button>
   <p style="font-size:0.72rem; color:#aaa; margin-top:10px; text-align:center;">Powered by Square · Visa, MC, Amex, Apple Pay, Google Pay</p>
 </div>
 
@@ -1486,7 +1497,7 @@ document.addEventListener("DOMContentLoaded", () => {
   <div class="pay-icon" style="background:linear-gradient(135deg,#FF6EB0,#FF5E00);">🎁</div>
   <h3 class="pay-title">Gift Cards</h3>
   <p class="pay-desc">Give the gift of great coffee and donuts. Digital and physical gift cards available — perfect for any occasion.</p>
-  <a href="https://squareup.com/gift" target="_blank" class="btn-primary" style="display:block; text-align:center; margin-top:auto; background:linear-gradient(135deg,#FF6EB0,#FF5E00);">Buy a Gift Card →</a>
+  <button onclick="openSquarePayment()" class="btn-primary" style="display:block; text-align:center; margin-top:auto; width:100%; background:linear-gradient(135deg,#FF6EB0,#FF5E00); font-family:'DM Sans',sans-serif;">Buy a Gift Card →</button>
   <p style="font-size:0.72rem; color:#aaa; margin-top:10px; text-align:center;">Powered by Square Gift Cards</p>
 </div>
 
@@ -1495,12 +1506,39 @@ document.addEventListener("DOMContentLoaded", () => {
   <div class="pay-icon" style="background:linear-gradient(135deg,#E8A800,#FF5E00);">👑</div>
   <h3 class="pay-title">TK Loyalty Rewards</h3>
   <p class="pay-desc">Earn points on every purchase with <strong>Square Loyalty</strong>. Redeem for free drinks, donuts, and exclusive member deals. Sign up takes 10 seconds — just your phone number!</p>
-  <a href="https://squareup.com/loyalty" target="_blank" class="btn-primary" style="display:block; text-align:center; margin-top:auto; background:linear-gradient(135deg,#E8A800,#FF5E00);">Join TK Rewards →</a>
+  <button onclick="openSquarePayment()" class="btn-primary" style="display:block; text-align:center; margin-top:auto; width:100%; background:linear-gradient(135deg,#E8A800,#FF5E00); font-family:'DM Sans',sans-serif;">Join TK Rewards →</button>
   <p style="font-size:0.72rem; color:#aaa; margin-top:10px; text-align:center;">Powered by Square Loyalty</p>
 </div>
-```
 
   </div>
+
+<!-- SQUARE PAYMENT MODAL -->
+<div id="square-payment-modal" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.6); backdrop-filter:blur(6px); align-items:center; justify-content:center;">
+  <div style="background:#fff; border-radius:24px; padding:36px 32px; max-width:440px; width:90%; position:relative; box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+    <button onclick="closeSquarePayment()" style="position:absolute; top:14px; right:14px; background:rgba(0,0,0,0.06); border:none; width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:1.1rem; display:flex; align-items:center; justify-content:center;">X</button>
+    <div style="text-align:center; margin-bottom:24px;">
+      <div style="width:50px; height:50px; border-radius:14px; background:linear-gradient(135deg,#FF5E00,#FFD600); display:inline-flex; align-items:center; justify-content:center; font-size:1.5rem; margin-bottom:12px;">🛒</div>
+      <h3 style="font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:900; color:#2a0f02;">Secure Payment</h3>
+      <p style="color:#7a5a40; font-size:0.85rem; margin-top:6px;">Pay securely with Square</p>
+    </div>
+
+    <div id="sq-payment-form-container">
+      <label style="font-size:0.82rem; font-weight:600; color:#3a1a08; display:block; margin-bottom:8px;">Amount ($)</label>
+      <input type="number" id="sq-amount" min="1" step="0.01" placeholder="0.00" style="width:100%; padding:12px 14px; border:2px solid rgba(255,120,0,0.2); border-radius:10px; font-size:1.1rem; font-family:'DM Sans',sans-serif; color:#2a0f02; outline:none; box-sizing:border-box; margin-bottom:16px; transition:border-color 0.2s;" onfocus="this.style.borderColor='#FF5E00'" onblur="this.style.borderColor='rgba(255,120,0,0.2)'"/>
+
+      <label style="font-size:0.82rem; font-weight:600; color:#3a1a08; display:block; margin-bottom:8px;">Card Details</label>
+      <div id="card-container" style="min-height:50px; margin-bottom:16px;"></div>
+
+      <div id="sq-error-msg" style="display:none; background:rgba(220,50,50,0.08); border:1px solid rgba(220,50,50,0.2); border-radius:8px; padding:10px 14px; margin-bottom:14px; color:#c03030; font-size:0.82rem;"></div>
+      <div id="sq-success-msg" style="display:none; background:rgba(40,167,69,0.08); border:1px solid rgba(40,167,69,0.2); border-radius:8px; padding:10px 14px; margin-bottom:14px; color:#28a745; font-size:0.82rem;"></div>
+
+      <button id="sq-pay-btn" onclick="handleSquarePayment()" style="width:100%; padding:14px; border:none; border-radius:12px; background:linear-gradient(135deg,#FF5E00,#FFD600); color:#1c0a03; font-weight:700; font-size:0.95rem; cursor:pointer; font-family:'DM Sans',sans-serif; letter-spacing:0.03em; transition:filter 0.2s, transform 0.2s;" onmouseover="this.style.filter='brightness(1.1)'" onmouseout="this.style.filter='none'">
+        Pay Now
+      </button>
+      <p style="font-size:0.72rem; color:#aaa; margin-top:12px; text-align:center;">Secured by Square - PCI compliant, encrypted end-to-end</p>
+    </div>
+  </div>
+</div>
 
   <!-- PAYMENT TRUST BADGES -->
 
@@ -1760,10 +1798,12 @@ document.getElementById('apply-overlay').addEventListener('click', function(e) {
 
 <script>
 function showTab(name) {
-  document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.tab-pane').forEach(el => el.style.display = 'none');
   document.querySelectorAll('.menu-tab').forEach(el => el.classList.remove('active-tab'));
-  document.getElementById('tab-content-' + name).style.display = 'block';
+  var pane = document.getElementById('tab-content-' + name);
+  pane.style.display = 'block';
   document.getElementById('tab-' + name).classList.add('active-tab');
+  pane.querySelectorAll('.reveal').forEach(function(el) { el.classList.add('visible'); });
 }
 </script>
 
@@ -2413,6 +2453,103 @@ function setBanner(show) {
   toast.textContent = show ? '✅ Banner is now visible!' : '✅ Banner hidden!';
   toast.classList.add('show');
   setTimeout(() => toast.classList.remove('show'), 2500);
+}
+</script>
+
+<script>
+/* ── Square Web Payments SDK ── */
+const SQUARE_APP_ID = 'SQUARE_APPLICATION_ID_PLACEHOLDER';
+const SQUARE_LOCATION_ID = 'SQUARE_LOCATION_ID_PLACEHOLDER';
+let squareCard = null;
+
+async function initSquarePayments() {
+  if (!window.Square) return;
+  try {
+    const payments = window.Square.payments(SQUARE_APP_ID, SQUARE_LOCATION_ID);
+    squareCard = await payments.card();
+    await squareCard.attach('#card-container');
+  } catch (e) {
+    console.error('Square init error:', e);
+  }
+}
+
+function openSquarePayment() {
+  const modal = document.getElementById('square-payment-modal');
+  modal.style.display = 'flex';
+  document.getElementById('sq-error-msg').style.display = 'none';
+  document.getElementById('sq-success-msg').style.display = 'none';
+  document.getElementById('sq-amount').value = '';
+  if (!squareCard) initSquarePayments();
+}
+
+function closeSquarePayment() {
+  document.getElementById('square-payment-modal').style.display = 'none';
+}
+
+document.getElementById('square-payment-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeSquarePayment();
+});
+
+async function handleSquarePayment() {
+  const errEl = document.getElementById('sq-error-msg');
+  const successEl = document.getElementById('sq-success-msg');
+  const payBtn = document.getElementById('sq-pay-btn');
+  const amountInput = document.getElementById('sq-amount');
+
+  errEl.style.display = 'none';
+  successEl.style.display = 'none';
+
+  const amount = parseFloat(amountInput.value);
+  if (!amount || amount < 1) {
+    errEl.textContent = 'Please enter an amount of at least $1.00';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  if (!squareCard) {
+    errEl.textContent = 'Payment form is still loading. Please wait a moment and try again.';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  payBtn.disabled = true;
+  payBtn.textContent = 'Processing...';
+
+  try {
+    const tokenResult = await squareCard.tokenize();
+    if (tokenResult.status !== 'OK') {
+      const errorMessages = tokenResult.errors
+        ? tokenResult.errors.map(e => e.message).join(', ')
+        : 'Card tokenization failed';
+      throw new Error(errorMessages);
+    }
+
+    const response = await fetch('/api/square-payment', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        sourceId: tokenResult.token,
+        amount: amount
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok || data.error) {
+      throw new Error(data.error || 'Payment failed');
+    }
+
+    successEl.innerHTML = 'Payment successful! Thank you for your order. ' +
+      (data.receiptUrl ? '<a href="' + data.receiptUrl + '" target="_blank" style="color:#28a745; font-weight:700;">View Receipt</a>' : '');
+    successEl.style.display = 'block';
+    payBtn.textContent = 'Paid!';
+
+  } catch (err) {
+    errEl.textContent = err.message;
+    errEl.style.display = 'block';
+    payBtn.disabled = false;
+    payBtn.textContent = 'Pay Now';
+  }
 }
 </script>
 
