@@ -1045,8 +1045,10 @@ div[style*=“grid-template-columns:1fr 1fr 1fr”]{grid-template-columns:1fr!im
 function showTab(name){
   document.querySelectorAll('.tab-pane').forEach(el=>el.style.display='none');
   document.querySelectorAll('.menu-tab').forEach(el=>el.classList.remove('active-tab'));
-  document.getElementById('tab-content-'+name).style.display='block';
+  var pane=document.getElementById('tab-content-'+name);
+  pane.style.display='block';
   document.getElementById('tab-'+name).classList.add('active-tab');
+  pane.querySelectorAll('.reveal').forEach(function(el){el.classList.add('visible');});
 }
 </script>
 
@@ -1798,8 +1800,10 @@ document.getElementById('apply-overlay').addEventListener('click', function(e) {
 function showTab(name) {
   document.querySelectorAll('.tab-pane').forEach(el => el.style.display = 'none');
   document.querySelectorAll('.menu-tab').forEach(el => el.classList.remove('active-tab'));
-  document.getElementById('tab-content-' + name).style.display = 'block';
+  var pane = document.getElementById('tab-content-' + name);
+  pane.style.display = 'block';
   document.getElementById('tab-' + name).classList.add('active-tab');
+  pane.querySelectorAll('.reveal').forEach(function(el) { el.classList.add('visible'); });
 }
 </script>
 
