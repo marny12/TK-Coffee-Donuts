@@ -1,4 +1,15 @@
 exports.handler = async function(event, context) {
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 204,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS'
+      }
+    };
+  }
+
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
@@ -6,7 +17,8 @@ exports.handler = async function(event, context) {
   try {
     const { messages } = JSON.parse(event.body);
 
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const baseUrl = process.env.ANTHROPIC_BASE_URL || 'https://api.anthropic.com';
+    const response = await fetch(`${baseUrl}/v1/messages`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -20,6 +32,19 @@ exports.handler = async function(event, context) {
         messages: messages
       })
     });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error(`Anthropic API error (${response.status}):`, errorText);
+      return {
+        statusCode: response.status,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        },
+        body: JSON.stringify({ error: `API request failed with status ${response.status}` })
+      };
+    }
 
     const data = await response.json();
 

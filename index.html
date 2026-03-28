@@ -23,7 +23,7 @@
     --warm-white: #FFFBF4;
   }
 
-- { margin: 0; padding: 0; box-sizing: border-box; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 html { scroll-behavior: smooth; }
 
@@ -46,18 +46,18 @@ border-bottom: 1px solid rgba(212,160,23,0.2);
 .nav-logo {
 font-family: ‘Playfair Display’, serif;
 font-size: 1.3rem; font-weight: 900;
-color: var(–gold);
+color: var(--gold);
 letter-spacing: 0.02em;
 }
 .nav-links { display: flex; gap: 28px; }
 .nav-links a {
-color: var(–cream); text-decoration: none;
+color: var(--cream); text-decoration: none;
 font-size: 0.85rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
 opacity: 0.8; transition: opacity 0.2s, color 0.2s;
 }
-.nav-links a:hover { opacity: 1; color: var(–gold-light); }
+.nav-links a:hover { opacity: 1; color: var(--gold-light); }
 .nav-cta {
-background: linear-gradient(135deg, #FF6B1A, #FFD600); color: var(–brown) !important;
+background: linear-gradient(135deg, #FF6B1A, #FFD600); color: var(--brown) !important;
 padding: 8px 20px; border-radius: 50px;
 font-weight: 700 !important; opacity: 1 !important;
 transition: filter 0.2s !important;
@@ -123,7 +123,7 @@ to { opacity:1; transform:translateY(0); }
 display: inline-block;
 background: rgba(255,107,26,0.15);
 border: 1px solid rgba(255,200,0,0.45);
-color: var(–yellow-hot);
+color: var(--yellow-hot);
 font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
 padding: 6px 18px; border-radius: 50px;
 margin-bottom: 24px;
@@ -134,11 +134,11 @@ animation: fadeUp 0.9s ease 0.1s both;
 font-family: ‘Playfair Display’, serif;
 font-size: clamp(3rem, 8vw, 5.5rem);
 font-weight: 900; line-height: 1.05;
-color: var(–cream);
+color: #FF1493;
 animation: fadeUp 0.9s ease 0.2s both;
 }
 .hero h1 em {
-font-style: italic; color: var(–gold);
+font-style: italic; color: #FF69B4;
 display: block;
 }
 
@@ -157,7 +157,7 @@ animation: fadeUp 0.9s ease 0.5s both;
 }
 .btn-primary {
 background: linear-gradient(135deg, #FF6B1A, #FFD600);
-color: var(–brown);
+color: var(--brown);
 padding: 14px 36px; border-radius: 50px;
 font-weight: 700; font-size: 0.9rem; letter-spacing: 0.05em; text-transform: uppercase;
 text-decoration: none; border: none; cursor: pointer;
@@ -166,13 +166,13 @@ box-shadow: 0 4px 24px rgba(255,107,26,0.45);
 }
 .btn-primary:hover { filter: brightness(1.12); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(255,214,0,0.5); }
 .btn-outline {
-background: transparent; color: var(–cream);
+background: transparent; color: var(--cream);
 padding: 14px 36px; border-radius: 50px;
 font-weight: 500; font-size: 0.9rem; letter-spacing: 0.05em; text-transform: uppercase;
 text-decoration: none; border: 1px solid rgba(255,248,238,0.3); cursor: pointer;
 transition: border-color 0.2s, color 0.2s, transform 0.2s;
 }
-.btn-outline:hover { border-color: var(–gold); color: var(–gold); transform: translateY(-2px); }
+.btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
 
 /* –– MARQUEE –– */
 .marquee-wrap {
@@ -194,7 +194,7 @@ animation: marquee 20s linear infinite;
 .marquee-track span {
 font-family: ‘Playfair Display’, serif;
 font-style: italic;
-font-size: 0.95rem; color: var(–brown);
+font-size: 0.95rem; color: var(--brown);
 font-weight: 700; letter-spacing: 0.02em;
 margin: 0 32px;
 }
@@ -209,7 +209,7 @@ section { padding: 80px 40px; }
 .section-tag {
 display: inline-block;
 font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
-color: var(–orange-hot); border-bottom: 1px solid var(–orange-hot);
+color: var(--orange-hot); border-bottom: 1px solid var(--orange-hot);
 padding-bottom: 4px; margin-bottom: 16px;
 }
 .section-title {
@@ -236,7 +236,7 @@ display: flex; flex-direction: column; justify-content: center;
 display: inline-flex; align-items: center; gap: 8px;
 background: rgba(255,94,0,0.1);
 border: 1px solid rgba(255,94,0,0.25);
-color: var(–orange);
+color: var(--orange);
 font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
 padding: 6px 16px; border-radius: 50px;
 width: fit-content; margin-bottom: 20px;
@@ -246,7 +246,7 @@ font-family: ‘Playfair Display’, serif;
 font-size: 2.4rem; font-weight: 900; line-height: 1.1;
 color: #2a0f02; margin-bottom: 16px;
 }
-.sig-title span { color: var(–orange); }
+.sig-title span { color: var(--orange); }
 .sig-desc {
 color: #7a4a30; line-height: 1.7;
 font-size: 0.97rem; margin-bottom: 28px;
@@ -294,7 +294,7 @@ font-size: 1.3rem; color: #2a0f02; margin-bottom: 8px;
 .menu-card p { color: #7a5a40; font-size: 0.9rem; line-height: 1.6; }
 .menu-tag {
 display: inline-block; margin-top: 16px;
-background: rgba(255,107,26,0.15); color: var(–yellow-hot);
+background: rgba(255,107,26,0.15); color: var(--yellow-hot);
 font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
 padding: 4px 12px; border-radius: 50px;
 }
@@ -315,8 +315,8 @@ box-shadow: 0 4px 16px rgba(255,94,0,0.08);
 transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
 text-decoration: none; color: #2a0f02;
 }
-.platform-pill:hover { border-color: var(–orange); box-shadow: 0 8px 28px rgba(255,94,0,0.2); transform: translateY(-3px); }
-.platform-dot { width: 10px; height: 10px; border-radius: 50%; background: var(–gold); animation: pulse 2s ease infinite; }
+.platform-pill:hover { border-color: var(--orange); box-shadow: 0 8px 28px rgba(255,94,0,0.2); transform: translateY(-3px); }
+.platform-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--gold); animation: pulse 2s ease infinite; }
 @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.5;transform:scale(1.3);} }
 
 /* –– VISIT –– */
@@ -328,7 +328,7 @@ text-align: center;
 }
 .visit-address {
 font-family: ‘Playfair Display’, serif;
-font-size: 1.5rem; color: var(–gold);
+font-size: 1.5rem; color: var(--gold);
 margin: 20px 0 8px; font-weight: 700;
 }
 .visit-sub { color: rgba(255,248,238,0.55); font-size: 0.9rem; margin-bottom: 32px; }
@@ -346,7 +346,7 @@ margin-bottom: 36px;
 
 /* –– FOOTER –– */
 footer {
-background: var(–dark-brown);
+background: var(--dark-brown);
 border-top: 1px solid rgba(212,160,23,0.1);
 padding: 40px; text-align: center;
 }
@@ -400,7 +400,7 @@ font-weight: 600; font-size: 0.95rem;
 padding: 12px 28px; border-radius: 50px; cursor: pointer;
 transition: all 0.2s; box-shadow: 0 2px 12px rgba(0,0,0,0.06);
 }
-.menu-tab:hover { border-color: var(–orange); color: var(–orange); transform: translateY(-2px); }
+.menu-tab:hover { border-color: var(--orange); color: var(--orange); transform: translateY(-2px); }
 .active-tab {
 background: linear-gradient(135deg, #FF5E00, #FFD600) !important;
 border-color: transparent !important; color: #1c0a03 !important;
@@ -419,7 +419,7 @@ border-bottom: 2px solid rgba(255,94,0,0.2);
 display: grid; grid-template-columns: 1fr auto auto;
 gap: 0 20px;
 font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
-color: var(–orange); font-weight: 700;
+color: var(--orange); font-weight: 700;
 padding: 6px 14px; margin-bottom: 4px;
 }
 .menu-row {
@@ -432,7 +432,7 @@ transition: background 0.15s;
 border-radius: 8px;
 }
 .menu-row:hover { background: rgba(255,94,0,0.05); }
-.menu-row span:last-child { font-weight: 700; color: var(–orange); white-space: nowrap; }
+.menu-row span:last-child { font-weight: 700; color: var(--orange); white-space: nowrap; }
 .menu-table-header { grid-template-columns: 1fr auto auto; }
 .menu-row:has(span:nth-child(3)) { grid-template-columns: 1fr auto auto; }
 .menu-promo {
@@ -1006,7 +1006,7 @@ font-weight:600; font-size:0.95rem;
 padding:12px 28px; border-radius:50px; cursor:pointer;
 transition:all 0.2s; box-shadow:0 2px 12px rgba(0,0,0,0.06);
 }
-.menu-tab:hover { border-color:var(–orange); color:var(–orange); transform:translateY(-2px); }
+.menu-tab:hover { border-color:var(--orange); color:var(--orange); transform:translateY(-2px); }
 .active-tab { background:linear-gradient(135deg,#FF5E00,#FFD600)!important; border-color:transparent!important; color:#1c0a03!important; box-shadow:0 4px 18px rgba(255,94,0,0.35)!important; }
 .tab-pane { animation:fadeUp 0.4s ease both; }
 .mcath {
@@ -1017,25 +1017,92 @@ margin:28px 0 14px; padding-bottom:10px; border-bottom:2px solid rgba(255,94,0,0
 .mhdr {
 display:grid; grid-template-columns:1fr auto auto; gap:0 24px;
 font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase;
-color:var(–orange); font-weight:700; padding:6px 14px 4px;
+color:var(--orange); font-weight:700; padding:6px 14px 4px;
 }
 .mhdr span:nth-child(2), .mhdr span:nth-child(3) { text-align:right; }
 .mrow {
-display:grid; grid-template-columns:1fr auto auto; gap:0 24px; align-items:center;
+display:grid; grid-template-columns:1fr auto auto; gap:0 16px; align-items:center;
 padding:11px 14px; border-bottom:1px solid rgba(255,120,0,0.08);
 font-size:0.95rem; color:#3a1a08; border-radius:8px; transition:background 0.15s;
 }
+.mrow:has(span:nth-child(3)) { grid-template-columns:1fr auto auto auto; }
 .mrow:hover { background:rgba(255,94,0,0.05); }
-.mrow span:nth-child(2), .mrow span:nth-child(3) { font-weight:700; color:var(–orange); text-align:right; white-space:nowrap; }
-.mrow:not(:has(span:nth-child(3))) { grid-template-columns:1fr auto; }
+.mrow span:nth-child(2), .mrow span:nth-child(3) { font-weight:700; color:var(--orange); text-align:right; white-space:nowrap; }
+.mrow:not(:has(span:nth-child(3):not(.add-btn))) { grid-template-columns:1fr auto auto; }
+.add-btn {
+  background:linear-gradient(135deg,#FF5E00,#FFD600); color:#1c0a03; border:none; border-radius:50px;
+  padding:5px 14px; font-size:0.78rem; font-weight:800; cursor:pointer; white-space:nowrap;
+  transition:transform 0.15s, box-shadow 0.15s;
+}
+.add-btn:hover { transform:scale(1.08); box-shadow:0 3px 12px rgba(255,94,0,0.35); }
+.add-btn:active { transform:scale(0.95); }
+.cart-fab {
+  position:fixed; bottom:28px; right:28px; z-index:9999;
+  background:linear-gradient(135deg,#FF5E00,#FFD600); color:#1c0a03;
+  width:60px; height:60px; border-radius:50%; border:none; cursor:pointer;
+  font-size:1.5rem; display:none; align-items:center; justify-content:center;
+  box-shadow:0 6px 24px rgba(255,94,0,0.4); transition:transform 0.2s;
+}
+.cart-fab.has-items { display:flex; }
+.cart-fab:hover { transform:scale(1.1); }
+.cart-badge {
+  position:absolute; top:-4px; right:-4px; background:#1c0a03; color:#FFD600;
+  font-size:0.7rem; font-weight:800; min-width:22px; height:22px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+}
+.cart-panel {
+  position:fixed; bottom:100px; right:28px; z-index:9998;
+  background:#fff; border-radius:20px; width:340px; max-height:70vh;
+  box-shadow:0 12px 48px rgba(0,0,0,0.18); overflow:hidden;
+  display:none; flex-direction:column;
+}
+.cart-panel.open { display:flex; }
+.cart-header {
+  padding:20px 24px 14px; border-bottom:1px solid rgba(255,120,0,0.1);
+  display:flex; justify-content:space-between; align-items:center;
+}
+.cart-header h3 { font-family:'Playfair Display',serif; font-size:1.15rem; margin:0; }
+.cart-close { background:none; border:none; font-size:1.3rem; cursor:pointer; color:#999; }
+.cart-body { padding:12px 24px; overflow-y:auto; flex:1; }
+.cart-item {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:10px 0; border-bottom:1px solid rgba(255,120,0,0.06); font-size:0.88rem;
+}
+.cart-item-info { flex:1; }
+.cart-item-name { font-weight:600; color:#3a1a08; }
+.cart-item-price { color:#FF5E00; font-weight:700; font-size:0.82rem; }
+.cart-item-qty { display:flex; align-items:center; gap:8px; }
+.cart-qty-btn {
+  width:26px; height:26px; border-radius:50%; border:1.5px solid rgba(255,94,0,0.3);
+  background:#fff; color:#FF5E00; font-weight:700; font-size:0.9rem; cursor:pointer;
+  display:flex; align-items:center; justify-content:center; transition:all 0.15s;
+}
+.cart-qty-btn:hover { background:rgba(255,94,0,0.08); border-color:#FF5E00; }
+.cart-footer { padding:16px 24px; border-top:1px solid rgba(255,120,0,0.1); }
+.cart-total {
+  display:flex; justify-content:space-between; font-weight:800; font-size:1.05rem;
+  color:#1c0a03; margin-bottom:14px;
+}
+.cart-order-btn {
+  display:block; width:100%; padding:14px; border:none; border-radius:50px; cursor:pointer;
+  background:linear-gradient(135deg,#FF5E00,#FFD600); color:#1c0a03;
+  font-weight:800; font-size:1rem; text-align:center; text-decoration:none;
+  transition:transform 0.15s, box-shadow 0.15s;
+}
+.cart-order-btn:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(255,94,0,0.3); }
+.cart-empty { text-align:center; padding:32px 0; color:#aaa; font-size:0.9rem; }
+@media(max-width:400px){
+  .cart-panel { width:calc(100vw - 24px); right:12px; bottom:96px; }
+  .cart-fab { right:16px; bottom:16px; }
+}
 .mpromo { margin-top:28px; padding:14px 24px; background:linear-gradient(135deg,#FF5E00,#FFD600); border-radius:14px; font-weight:700; color:#1c0a03; font-size:0.95rem; text-align:center; }
 .mnote { font-size:0.82rem; color:#7a5a40; background:rgba(255,94,0,0.06); border:1px solid rgba(255,94,0,0.15); border-radius:10px; padding:10px 16px; margin-bottom:14px; line-height:1.6; }
 .addon-box { background:#fff; border:2px solid; border-radius:16px; padding:18px 20px; box-shadow:0 2px 12px rgba(0,0,0,0.05); }
 .addon-title { font-weight:800; font-size:0.9rem; margin-bottom:10px; }
 .addon-item { font-size:0.82rem; color:#5a3a20; padding:3px 0; }
 @media(max-width:600px){
-.mhdr,.mrow{grid-template-columns:1fr auto!important;}
-.mhdr span:nth-child(3),.mrow span:nth-child(3){display:none;}
+.mhdr,.mrow{grid-template-columns:1fr auto auto!important;}
+.mhdr span:nth-child(3),.mrow span:nth-child(3):not(.add-btn){display:none;}
 div[style*=“grid-template-columns:1fr 1fr”]{grid-template-columns:1fr!important;}
 div[style*=“grid-template-columns:1fr 1fr 1fr”]{grid-template-columns:1fr!important;}
 }
@@ -1139,11 +1206,20 @@ const PRICES = {
 };
 
 // ── Auto-render all menu rows from PRICES object ──────────
+function parsePrice(p) {
+  if (!p || p === '—') return 0;
+  const m = String(p).match(/\$([0-9]+\.?[0-9]*)/);
+  return m ? parseFloat(m[1]) : 0;
+}
 function mrow3(name, each, dozen) {
-  return `<div class="mrow"><span>${name}</span><span>${each}</span><span>${dozen}</span></div>`;
+  const price = parsePrice(each);
+  const btn = price > 0 ? `<button class="add-btn" onclick="addToCart('${name.replace(/'/g,"\\'")}','${each}',${price})">+ Add</button>` : '';
+  return `<div class="mrow"><span>${name}</span><span>${each}</span><span>${dozen}</span>${btn}</div>`;
 }
 function mrow2(name, price) {
-  return `<div class="mrow"><span>${name}</span><span>${price}</span></div>`;
+  const num = parsePrice(price);
+  const btn = num > 0 ? `<button class="add-btn" onclick="addToCart('${name.replace(/'/g,"\\'")}','${price}',${num})">+ Add</button>` : '';
+  return `<div class="mrow"><span>${name}</span><span>${price}</span>${btn}</div>`;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -1443,11 +1519,11 @@ document.addEventListener("DOMContentLoaded", () => {
     </p>
   </div>
   <div class="platforms-grid reveal">
-    <a href="#" class="platform-pill">
+    <a href="#order-online" class="platform-pill">
       <div class="platform-dot" style="background:#06C167;"></div>
       Uber Eats
     </a>
-    <a href="#" class="platform-pill">
+    <a href="#order-online" class="platform-pill">
       <div class="platform-dot" style="background:#FF3008;"></div>
       DoorDash
     </a>
@@ -1471,7 +1547,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:24px; max-width:900px; margin:0 auto 60px;" class="reveal">
 
-```
 <!-- ONLINE CHECKOUT -->
 <div class="pay-card">
   <div class="pay-icon" style="background:linear-gradient(135deg,#FF5E00,#FFD600);">🛒</div>
@@ -1498,7 +1573,6 @@ document.addEventListener("DOMContentLoaded", () => {
   <a href="https://squareup.com/loyalty" target="_blank" class="btn-primary" style="display:block; text-align:center; margin-top:auto; background:linear-gradient(135deg,#E8A800,#FF5E00);">Join TK Rewards →</a>
   <p style="font-size:0.72rem; color:#aaa; margin-top:10px; text-align:center;">Powered by Square Loyalty</p>
 </div>
-```
 
   </div>
 
@@ -1550,7 +1624,6 @@ document.addEventListener("DOMContentLoaded", () => {
       <h3 id="apply-position-title">Apply Now</h3>
       <p class="apply-sub" id="apply-position-type"></p>
 
-```
   <label class="apply-field-label">Full Name *</label>
   <input class="apply-input" id="apl-name" type="text" placeholder="Your full name"/>
 
@@ -1589,16 +1662,13 @@ document.addEventListener("DOMContentLoaded", () => {
   <label class="apply-field-label">Availability *</label>
   <div class="apply-checkbox-group">
     <label class="apply-check-label"><input type="checkbox" name="avail" value="Monday"> Monday</label>
-```
+    <label class="apply-check-label"><input type="checkbox" name="avail" value="Wednesday"> Wednesday</label>
+    <label class="apply-check-label"><input type="checkbox" name="avail" value="Thursday"> Thursday</label>
+    <label class="apply-check-label"><input type="checkbox" name="avail" value="Friday"> Friday</label>
+    <label class="apply-check-label"><input type="checkbox" name="avail" value="Saturday"> Saturday</label>
+    <label class="apply-check-label"><input type="checkbox" name="avail" value="Sunday"> Sunday</label>
+  </div>
 
-<label class="apply-check-label"><input type="checkbox" name="avail" value="Wednesday"> Wednesday</label>
-<label class="apply-check-label"><input type="checkbox" name="avail" value="Thursday"> Thursday</label>
-<label class="apply-check-label"><input type="checkbox" name="avail" value="Friday"> Friday</label>
-<label class="apply-check-label"><input type="checkbox" name="avail" value="Saturday"> Saturday</label>
-<label class="apply-check-label"><input type="checkbox" name="avail" value="Sunday"> Sunday</label>
-</div>
-
-```
   <label class="apply-field-label">Work Experience</label>
   <textarea class="apply-textarea" id="apl-experience" placeholder="Tell us about any relevant work experience (food service, customer service, etc.). No experience? That's okay too!"></textarea>
 
@@ -1618,7 +1688,6 @@ document.addEventListener("DOMContentLoaded", () => {
   <p>Thanks for applying at <strong>TK Coffee & Donuts</strong>!<br/>We'll review your application and reach out soon.<br/><br/>We're excited to possibly have you on the team! 🍩☕</p>
   <button id="apply-submit" style="margin-top:20px;" onclick="closeApply()">Close</button>
 </div>
-```
 
   </div>
 </div>
@@ -1709,7 +1778,6 @@ document.getElementById('apply-overlay').addEventListener('click', function(e) {
     <div class="section-tag" style="color:#FF8C00; border-color:#FF8C00;">Find Us</div>
     <h2 style="font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,3rem); font-weight:900; color:#FFF6E8; margin-bottom:32px;">Come Visit Us</h2>
 
-```
 <!-- Address Card -->
 <div style="display:inline-block; background:linear-gradient(135deg,#FF5E00,#FFD600); border-radius:24px; padding:4px; margin-bottom:32px; box-shadow:0 8px 40px rgba(255,94,0,0.45);">
   <div style="background:#1c0a03; border-radius:21px; padding:28px 48px;">
@@ -1731,7 +1799,6 @@ document.getElementById('apply-overlay').addEventListener('click', function(e) {
 
 <br/>
 <a href="https://maps.google.com/?q=1155+W+State+Rd+434+Longwood+FL" target="_blank" class="btn-primary" style="display:inline-block;">📍 Get Directions</a>
-```
 
   </div>
 </section>
@@ -1760,7 +1827,7 @@ document.getElementById('apply-overlay').addEventListener('click', function(e) {
 
 <script>
 function showTab(name) {
-  document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.tab-pane').forEach(el => el.style.display = 'none');
   document.querySelectorAll('.menu-tab').forEach(el => el.classList.remove('active-tab'));
   document.getElementById('tab-content-' + name).style.display = 'block';
   document.getElementById('tab-' + name).classList.add('active-tab');
@@ -2005,23 +2072,23 @@ function saveSection(section) {
   ).join('');
 
   document.getElementById('menu-donuts-regular').innerHTML =
-    PRICES.donuts.regular.map(i => `<div class="mrow"><span>${i.name}</span><span>${i.each}</span><span>${i.dozen}</span></div>`).join('');
+    PRICES.donuts.regular.map(i => mrow3(i.name, i.each, i.dozen)).join('');
   document.getElementById('menu-donuts-fancy').innerHTML =
-    PRICES.donuts.fancy.map(i => `<div class="mrow"><span>${i.name}</span><span>${i.each}</span><span>${i.dozen}</span></div>`).join('');
+    PRICES.donuts.fancy.map(i => mrow3(i.name, i.each, i.dozen)).join('');
   document.getElementById('menu-donuts-note').innerHTML =
     `★ Dozen Regular Mixed ${PRICES.donuts.dozenMixed} &nbsp;·&nbsp; Any fancy added extra ${PRICES.donuts.fancyExtra} (yeast only) &nbsp;·&nbsp; Dossant added extra ${PRICES.donuts.DossantExtra}`;
   document.getElementById('menu-hot-coffee').innerHTML =
-    PRICES.hotCoffee.map(i => `<div class="mrow"><span>${i.name}</span><span>${i.price}</span></div>`).join('');
+    PRICES.hotCoffee.map(i => mrow2(i.name, i.price)).join('');
   document.getElementById('menu-iced-coffee').innerHTML =
-    PRICES.icedCoffee.map(i => `<div class="mrow"><span>${i.name}</span><span>${i.price}</span></div>`).join('');
+    PRICES.icedCoffee.map(i => mrow2(i.name, i.price)).join('');
   document.getElementById('menu-green-tea').innerHTML =
-    PRICES.greenTea.map(i => `<div class="mrow"><span>${i.name}</span><span>${i.price}</span></div>`).join('');
+    PRICES.greenTea.map(i => mrow2(i.name, i.price)).join('');
   document.getElementById('menu-milk-tea').innerHTML =
-    PRICES.milkTea.map(i => `<div class="mrow"><span>${i.name}</span><span>${i.price}</span></div>`).join('');
+    PRICES.milkTea.map(i => mrow2(i.name, i.price)).join('');
   document.getElementById('menu-breakfast-sweetroll').innerHTML =
-    PRICES.breakfast.sweetRoll.map(i => `<div class="mrow"><span>${i.name}</span><span>${i.price}</span></div>`).join('');
+    PRICES.breakfast.sweetRoll.map(i => mrow2(i.name, i.price)).join('');
   document.getElementById('menu-breakfast-croissant').innerHTML =
-    PRICES.breakfast.croissant.map(i => `<div class="mrow"><span>${i.name}</span><span>${i.price}</span></div>`).join('');
+    PRICES.breakfast.croissant.map(i => mrow2(i.name, i.price)).join('');
   document.getElementById('addon-flavor-price').textContent  = 'Flavor '   + PRICES.addons.flavor;
   document.getElementById('addon-topping-price').textContent = 'Topping '  + PRICES.addons.topping;
   document.getElementById('addon-nondairy-price').textContent= 'Nondairy ' + PRICES.addons.nondairy;
@@ -2413,6 +2480,96 @@ function setBanner(show) {
   toast.textContent = show ? '✅ Banner is now visible!' : '✅ Banner hidden!';
   toast.classList.add('show');
   setTimeout(() => toast.classList.remove('show'), 2500);
+}
+</script>
+
+<!-- ORDER CART -->
+<button class="cart-fab" id="cart-fab" onclick="toggleCart()">
+  🛒
+  <span class="cart-badge" id="cart-badge">0</span>
+</button>
+
+<div class="cart-panel" id="cart-panel">
+  <div class="cart-header">
+    <h3>Your Order</h3>
+    <button class="cart-close" onclick="toggleCart()">&times;</button>
+  </div>
+  <div class="cart-body" id="cart-body">
+    <div class="cart-empty">Your cart is empty.<br/>Browse the menu and tap <strong>+ Add</strong> to start your order!</div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total"><span>Total</span><span id="cart-total">$0.00</span></div>
+    <button class="cart-order-btn" id="cart-order-btn" onclick="placeOrder()">Place Order via Square →</button>
+  </div>
+</div>
+
+<script>
+// ── Cart Logic ──
+const tkCart = [];
+
+function addToCart(name, label, price) {
+  const existing = tkCart.find(i => i.name === name);
+  if (existing) {
+    existing.qty++;
+  } else {
+    tkCart.push({ name, label, price, qty: 1 });
+  }
+  renderCart();
+}
+
+function changeQty(idx, delta) {
+  tkCart[idx].qty += delta;
+  if (tkCart[idx].qty <= 0) tkCart.splice(idx, 1);
+  renderCart();
+}
+
+function renderCart() {
+  const body = document.getElementById('cart-body');
+  const badge = document.getElementById('cart-badge');
+  const fab = document.getElementById('cart-fab');
+  const totalEl = document.getElementById('cart-total');
+  const count = tkCart.reduce((s, i) => s + i.qty, 0);
+  const total = tkCart.reduce((s, i) => s + i.price * i.qty, 0);
+
+  badge.textContent = count;
+  fab.classList.toggle('has-items', count > 0);
+  totalEl.textContent = '$' + total.toFixed(2);
+
+  if (count === 0) {
+    body.innerHTML = '<div class="cart-empty">Your cart is empty.<br/>Browse the menu and tap <strong>+ Add</strong> to start your order!</div>';
+    return;
+  }
+
+  body.innerHTML = tkCart.map((item, i) => `
+    <div class="cart-item">
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-price">${item.label} × ${item.qty} = $${(item.price * item.qty).toFixed(2)}</div>
+      </div>
+      <div class="cart-item-qty">
+        <button class="cart-qty-btn" onclick="changeQty(${i},-1)">−</button>
+        <span style="font-weight:700;min-width:18px;text-align:center;">${item.qty}</span>
+        <button class="cart-qty-btn" onclick="changeQty(${i},1)">+</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleCart() {
+  document.getElementById('cart-panel').classList.toggle('open');
+}
+
+function placeOrder() {
+  if (tkCart.length === 0) return;
+  // Build order summary for reference then redirect to Square
+  const summary = tkCart.map(i => `${i.qty}x ${i.name}`).join(', ');
+  const total = tkCart.reduce((s, i) => s + i.price * i.qty, 0).toFixed(2);
+  // Redirect to Square online ordering
+  window.open('https://squareup.com', '_blank');
+  // Show confirmation
+  const panel = document.getElementById('cart-panel');
+  const body = document.getElementById('cart-body');
+  body.innerHTML = '<div class="cart-empty" style="color:#FF5E00;">✅ Redirecting to Square to complete your order!<br/><br/><strong>Order Summary:</strong><br/>' + summary + '<br/>Total: $' + total + '</div>';
 }
 </script>
 
