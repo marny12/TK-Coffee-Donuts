@@ -1443,11 +1443,11 @@ document.addEventListener("DOMContentLoaded", () => {
     </p>
   </div>
   <div class="platforms-grid reveal">
-    <a href="#" class="platform-pill">
+    <a href="#order-online" class="platform-pill">
       <div class="platform-dot" style="background:#06C167;"></div>
       Uber Eats
     </a>
-    <a href="#" class="platform-pill">
+    <a href="#order-online" class="platform-pill">
       <div class="platform-dot" style="background:#FF3008;"></div>
       DoorDash
     </a>
@@ -1471,7 +1471,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:24px; max-width:900px; margin:0 auto 60px;" class="reveal">
 
-```
 <!-- ONLINE CHECKOUT -->
 <div class="pay-card">
   <div class="pay-icon" style="background:linear-gradient(135deg,#FF5E00,#FFD600);">🛒</div>
@@ -1498,7 +1497,6 @@ document.addEventListener("DOMContentLoaded", () => {
   <a href="https://squareup.com/loyalty" target="_blank" class="btn-primary" style="display:block; text-align:center; margin-top:auto; background:linear-gradient(135deg,#E8A800,#FF5E00);">Join TK Rewards →</a>
   <p style="font-size:0.72rem; color:#aaa; margin-top:10px; text-align:center;">Powered by Square Loyalty</p>
 </div>
-```
 
   </div>
 
@@ -1550,7 +1548,6 @@ document.addEventListener("DOMContentLoaded", () => {
       <h3 id="apply-position-title">Apply Now</h3>
       <p class="apply-sub" id="apply-position-type"></p>
 
-```
   <label class="apply-field-label">Full Name *</label>
   <input class="apply-input" id="apl-name" type="text" placeholder="Your full name"/>
 
@@ -1589,16 +1586,14 @@ document.addEventListener("DOMContentLoaded", () => {
   <label class="apply-field-label">Availability *</label>
   <div class="apply-checkbox-group">
     <label class="apply-check-label"><input type="checkbox" name="avail" value="Monday"> Monday</label>
-```
+    <label class="apply-check-label"><input type="checkbox" name="avail" value="Tuesday"> Tuesday</label>
+    <label class="apply-check-label"><input type="checkbox" name="avail" value="Wednesday"> Wednesday</label>
+    <label class="apply-check-label"><input type="checkbox" name="avail" value="Thursday"> Thursday</label>
+    <label class="apply-check-label"><input type="checkbox" name="avail" value="Friday"> Friday</label>
+    <label class="apply-check-label"><input type="checkbox" name="avail" value="Saturday"> Saturday</label>
+    <label class="apply-check-label"><input type="checkbox" name="avail" value="Sunday"> Sunday</label>
+  </div>
 
-<label class="apply-check-label"><input type="checkbox" name="avail" value="Wednesday"> Wednesday</label>
-<label class="apply-check-label"><input type="checkbox" name="avail" value="Thursday"> Thursday</label>
-<label class="apply-check-label"><input type="checkbox" name="avail" value="Friday"> Friday</label>
-<label class="apply-check-label"><input type="checkbox" name="avail" value="Saturday"> Saturday</label>
-<label class="apply-check-label"><input type="checkbox" name="avail" value="Sunday"> Sunday</label>
-</div>
-
-```
   <label class="apply-field-label">Work Experience</label>
   <textarea class="apply-textarea" id="apl-experience" placeholder="Tell us about any relevant work experience (food service, customer service, etc.). No experience? That's okay too!"></textarea>
 
@@ -1618,7 +1613,6 @@ document.addEventListener("DOMContentLoaded", () => {
   <p>Thanks for applying at <strong>TK Coffee & Donuts</strong>!<br/>We'll review your application and reach out soon.<br/><br/>We're excited to possibly have you on the team! 🍩☕</p>
   <button id="apply-submit" style="margin-top:20px;" onclick="closeApply()">Close</button>
 </div>
-```
 
   </div>
 </div>
@@ -1709,7 +1703,6 @@ document.getElementById('apply-overlay').addEventListener('click', function(e) {
     <div class="section-tag" style="color:#FF8C00; border-color:#FF8C00;">Find Us</div>
     <h2 style="font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,3rem); font-weight:900; color:#FFF6E8; margin-bottom:32px;">Come Visit Us</h2>
 
-```
 <!-- Address Card -->
 <div style="display:inline-block; background:linear-gradient(135deg,#FF5E00,#FFD600); border-radius:24px; padding:4px; margin-bottom:32px; box-shadow:0 8px 40px rgba(255,94,0,0.45);">
   <div style="background:#1c0a03; border-radius:21px; padding:28px 48px;">
@@ -1731,7 +1724,6 @@ document.getElementById('apply-overlay').addEventListener('click', function(e) {
 
 <br/>
 <a href="https://maps.google.com/?q=1155+W+State+Rd+434+Longwood+FL" target="_blank" class="btn-primary" style="display:inline-block;">📍 Get Directions</a>
-```
 
   </div>
 </section>
@@ -1760,7 +1752,7 @@ document.getElementById('apply-overlay').addEventListener('click', function(e) {
 
 <script>
 function showTab(name) {
-  document.querySelectorAll('.tab-content').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.tab-pane').forEach(el => el.style.display = 'none');
   document.querySelectorAll('.menu-tab').forEach(el => el.classList.remove('active-tab'));
   document.getElementById('tab-content-' + name).style.display = 'block';
   document.getElementById('tab-' + name).classList.add('active-tab');
