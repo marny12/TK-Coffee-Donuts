@@ -1021,21 +1021,88 @@ color:var(–orange); font-weight:700; padding:6px 14px 4px;
 }
 .mhdr span:nth-child(2), .mhdr span:nth-child(3) { text-align:right; }
 .mrow {
-display:grid; grid-template-columns:1fr auto auto; gap:0 24px; align-items:center;
+display:grid; grid-template-columns:1fr auto auto; gap:0 16px; align-items:center;
 padding:11px 14px; border-bottom:1px solid rgba(255,120,0,0.08);
 font-size:0.95rem; color:#3a1a08; border-radius:8px; transition:background 0.15s;
 }
+.mrow:has(span:nth-child(3)) { grid-template-columns:1fr auto auto auto; }
 .mrow:hover { background:rgba(255,94,0,0.05); }
 .mrow span:nth-child(2), .mrow span:nth-child(3) { font-weight:700; color:var(–orange); text-align:right; white-space:nowrap; }
-.mrow:not(:has(span:nth-child(3))) { grid-template-columns:1fr auto; }
+.mrow:not(:has(span:nth-child(3):not(.add-btn))) { grid-template-columns:1fr auto auto; }
+.add-btn {
+  background:linear-gradient(135deg,#FF5E00,#FFD600); color:#1c0a03; border:none; border-radius:50px;
+  padding:5px 14px; font-size:0.78rem; font-weight:800; cursor:pointer; white-space:nowrap;
+  transition:transform 0.15s, box-shadow 0.15s;
+}
+.add-btn:hover { transform:scale(1.08); box-shadow:0 3px 12px rgba(255,94,0,0.35); }
+.add-btn:active { transform:scale(0.95); }
+.cart-fab {
+  position:fixed; bottom:28px; right:28px; z-index:9999;
+  background:linear-gradient(135deg,#FF5E00,#FFD600); color:#1c0a03;
+  width:60px; height:60px; border-radius:50%; border:none; cursor:pointer;
+  font-size:1.5rem; display:none; align-items:center; justify-content:center;
+  box-shadow:0 6px 24px rgba(255,94,0,0.4); transition:transform 0.2s;
+}
+.cart-fab.has-items { display:flex; }
+.cart-fab:hover { transform:scale(1.1); }
+.cart-badge {
+  position:absolute; top:-4px; right:-4px; background:#1c0a03; color:#FFD600;
+  font-size:0.7rem; font-weight:800; min-width:22px; height:22px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+}
+.cart-panel {
+  position:fixed; bottom:100px; right:28px; z-index:9998;
+  background:#fff; border-radius:20px; width:340px; max-height:70vh;
+  box-shadow:0 12px 48px rgba(0,0,0,0.18); overflow:hidden;
+  display:none; flex-direction:column;
+}
+.cart-panel.open { display:flex; }
+.cart-header {
+  padding:20px 24px 14px; border-bottom:1px solid rgba(255,120,0,0.1);
+  display:flex; justify-content:space-between; align-items:center;
+}
+.cart-header h3 { font-family:'Playfair Display',serif; font-size:1.15rem; margin:0; }
+.cart-close { background:none; border:none; font-size:1.3rem; cursor:pointer; color:#999; }
+.cart-body { padding:12px 24px; overflow-y:auto; flex:1; }
+.cart-item {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:10px 0; border-bottom:1px solid rgba(255,120,0,0.06); font-size:0.88rem;
+}
+.cart-item-info { flex:1; }
+.cart-item-name { font-weight:600; color:#3a1a08; }
+.cart-item-price { color:#FF5E00; font-weight:700; font-size:0.82rem; }
+.cart-item-qty { display:flex; align-items:center; gap:8px; }
+.cart-qty-btn {
+  width:26px; height:26px; border-radius:50%; border:1.5px solid rgba(255,94,0,0.3);
+  background:#fff; color:#FF5E00; font-weight:700; font-size:0.9rem; cursor:pointer;
+  display:flex; align-items:center; justify-content:center; transition:all 0.15s;
+}
+.cart-qty-btn:hover { background:rgba(255,94,0,0.08); border-color:#FF5E00; }
+.cart-footer { padding:16px 24px; border-top:1px solid rgba(255,120,0,0.1); }
+.cart-total {
+  display:flex; justify-content:space-between; font-weight:800; font-size:1.05rem;
+  color:#1c0a03; margin-bottom:14px;
+}
+.cart-order-btn {
+  display:block; width:100%; padding:14px; border:none; border-radius:50px; cursor:pointer;
+  background:linear-gradient(135deg,#FF5E00,#FFD600); color:#1c0a03;
+  font-weight:800; font-size:1rem; text-align:center; text-decoration:none;
+  transition:transform 0.15s, box-shadow 0.15s;
+}
+.cart-order-btn:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(255,94,0,0.3); }
+.cart-empty { text-align:center; padding:32px 0; color:#aaa; font-size:0.9rem; }
+@media(max-width:400px){
+  .cart-panel { width:calc(100vw - 24px); right:12px; bottom:96px; }
+  .cart-fab { right:16px; bottom:16px; }
+}
 .mpromo { margin-top:28px; padding:14px 24px; background:linear-gradient(135deg,#FF5E00,#FFD600); border-radius:14px; font-weight:700; color:#1c0a03; font-size:0.95rem; text-align:center; }
 .mnote { font-size:0.82rem; color:#7a5a40; background:rgba(255,94,0,0.06); border:1px solid rgba(255,94,0,0.15); border-radius:10px; padding:10px 16px; margin-bottom:14px; line-height:1.6; }
 .addon-box { background:#fff; border:2px solid; border-radius:16px; padding:18px 20px; box-shadow:0 2px 12px rgba(0,0,0,0.05); }
 .addon-title { font-weight:800; font-size:0.9rem; margin-bottom:10px; }
 .addon-item { font-size:0.82rem; color:#5a3a20; padding:3px 0; }
 @media(max-width:600px){
-.mhdr,.mrow{grid-template-columns:1fr auto!important;}
-.mhdr span:nth-child(3),.mrow span:nth-child(3){display:none;}
+.mhdr,.mrow{grid-template-columns:1fr auto auto!important;}
+.mhdr span:nth-child(3),.mrow span:nth-child(3):not(.add-btn){display:none;}
 div[style*=“grid-template-columns:1fr 1fr”]{grid-template-columns:1fr!important;}
 div[style*=“grid-template-columns:1fr 1fr 1fr”]{grid-template-columns:1fr!important;}
 }
@@ -1139,11 +1206,20 @@ const PRICES = {
 };
 
 // ── Auto-render all menu rows from PRICES object ──────────
+function parsePrice(p) {
+  if (!p || p === '—') return 0;
+  const m = String(p).match(/\$([0-9]+\.?[0-9]*)/);
+  return m ? parseFloat(m[1]) : 0;
+}
 function mrow3(name, each, dozen) {
-  return `<div class="mrow"><span>${name}</span><span>${each}</span><span>${dozen}</span></div>`;
+  const price = parsePrice(each);
+  const btn = price > 0 ? `<button class="add-btn" onclick="addToCart('${name.replace(/'/g,"\\'")}','${each}',${price})">+ Add</button>` : '';
+  return `<div class="mrow"><span>${name}</span><span>${each}</span><span>${dozen}</span>${btn}</div>`;
 }
 function mrow2(name, price) {
-  return `<div class="mrow"><span>${name}</span><span>${price}</span></div>`;
+  const num = parsePrice(price);
+  const btn = num > 0 ? `<button class="add-btn" onclick="addToCart('${name.replace(/'/g,"\\'")}','${price}',${num})">+ Add</button>` : '';
+  return `<div class="mrow"><span>${name}</span><span>${price}</span>${btn}</div>`;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -1997,23 +2073,23 @@ function saveSection(section) {
   ).join('');
 
   document.getElementById('menu-donuts-regular').innerHTML =
-    PRICES.donuts.regular.map(i => `<div class="mrow"><span>${i.name}</span><span>${i.each}</span><span>${i.dozen}</span></div>`).join('');
+    PRICES.donuts.regular.map(i => mrow3(i.name, i.each, i.dozen)).join('');
   document.getElementById('menu-donuts-fancy').innerHTML =
-    PRICES.donuts.fancy.map(i => `<div class="mrow"><span>${i.name}</span><span>${i.each}</span><span>${i.dozen}</span></div>`).join('');
+    PRICES.donuts.fancy.map(i => mrow3(i.name, i.each, i.dozen)).join('');
   document.getElementById('menu-donuts-note').innerHTML =
     `★ Dozen Regular Mixed ${PRICES.donuts.dozenMixed} &nbsp;·&nbsp; Any fancy added extra ${PRICES.donuts.fancyExtra} (yeast only) &nbsp;·&nbsp; Dossant added extra ${PRICES.donuts.DossantExtra}`;
   document.getElementById('menu-hot-coffee').innerHTML =
-    PRICES.hotCoffee.map(i => `<div class="mrow"><span>${i.name}</span><span>${i.price}</span></div>`).join('');
+    PRICES.hotCoffee.map(i => mrow2(i.name, i.price)).join('');
   document.getElementById('menu-iced-coffee').innerHTML =
-    PRICES.icedCoffee.map(i => `<div class="mrow"><span>${i.name}</span><span>${i.price}</span></div>`).join('');
+    PRICES.icedCoffee.map(i => mrow2(i.name, i.price)).join('');
   document.getElementById('menu-green-tea').innerHTML =
-    PRICES.greenTea.map(i => `<div class="mrow"><span>${i.name}</span><span>${i.price}</span></div>`).join('');
+    PRICES.greenTea.map(i => mrow2(i.name, i.price)).join('');
   document.getElementById('menu-milk-tea').innerHTML =
-    PRICES.milkTea.map(i => `<div class="mrow"><span>${i.name}</span><span>${i.price}</span></div>`).join('');
+    PRICES.milkTea.map(i => mrow2(i.name, i.price)).join('');
   document.getElementById('menu-breakfast-sweetroll').innerHTML =
-    PRICES.breakfast.sweetRoll.map(i => `<div class="mrow"><span>${i.name}</span><span>${i.price}</span></div>`).join('');
+    PRICES.breakfast.sweetRoll.map(i => mrow2(i.name, i.price)).join('');
   document.getElementById('menu-breakfast-croissant').innerHTML =
-    PRICES.breakfast.croissant.map(i => `<div class="mrow"><span>${i.name}</span><span>${i.price}</span></div>`).join('');
+    PRICES.breakfast.croissant.map(i => mrow2(i.name, i.price)).join('');
   document.getElementById('addon-flavor-price').textContent  = 'Flavor '   + PRICES.addons.flavor;
   document.getElementById('addon-topping-price').textContent = 'Topping '  + PRICES.addons.topping;
   document.getElementById('addon-nondairy-price').textContent= 'Nondairy ' + PRICES.addons.nondairy;
@@ -2405,6 +2481,96 @@ function setBanner(show) {
   toast.textContent = show ? '✅ Banner is now visible!' : '✅ Banner hidden!';
   toast.classList.add('show');
   setTimeout(() => toast.classList.remove('show'), 2500);
+}
+</script>
+
+<!-- ORDER CART -->
+<button class="cart-fab" id="cart-fab" onclick="toggleCart()">
+  🛒
+  <span class="cart-badge" id="cart-badge">0</span>
+</button>
+
+<div class="cart-panel" id="cart-panel">
+  <div class="cart-header">
+    <h3>Your Order</h3>
+    <button class="cart-close" onclick="toggleCart()">&times;</button>
+  </div>
+  <div class="cart-body" id="cart-body">
+    <div class="cart-empty">Your cart is empty.<br/>Browse the menu and tap <strong>+ Add</strong> to start your order!</div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total"><span>Total</span><span id="cart-total">$0.00</span></div>
+    <button class="cart-order-btn" id="cart-order-btn" onclick="placeOrder()">Place Order via Square →</button>
+  </div>
+</div>
+
+<script>
+// ── Cart Logic ──
+const tkCart = [];
+
+function addToCart(name, label, price) {
+  const existing = tkCart.find(i => i.name === name);
+  if (existing) {
+    existing.qty++;
+  } else {
+    tkCart.push({ name, label, price, qty: 1 });
+  }
+  renderCart();
+}
+
+function changeQty(idx, delta) {
+  tkCart[idx].qty += delta;
+  if (tkCart[idx].qty <= 0) tkCart.splice(idx, 1);
+  renderCart();
+}
+
+function renderCart() {
+  const body = document.getElementById('cart-body');
+  const badge = document.getElementById('cart-badge');
+  const fab = document.getElementById('cart-fab');
+  const totalEl = document.getElementById('cart-total');
+  const count = tkCart.reduce((s, i) => s + i.qty, 0);
+  const total = tkCart.reduce((s, i) => s + i.price * i.qty, 0);
+
+  badge.textContent = count;
+  fab.classList.toggle('has-items', count > 0);
+  totalEl.textContent = '$' + total.toFixed(2);
+
+  if (count === 0) {
+    body.innerHTML = '<div class="cart-empty">Your cart is empty.<br/>Browse the menu and tap <strong>+ Add</strong> to start your order!</div>';
+    return;
+  }
+
+  body.innerHTML = tkCart.map((item, i) => `
+    <div class="cart-item">
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-price">${item.label} × ${item.qty} = $${(item.price * item.qty).toFixed(2)}</div>
+      </div>
+      <div class="cart-item-qty">
+        <button class="cart-qty-btn" onclick="changeQty(${i},-1)">−</button>
+        <span style="font-weight:700;min-width:18px;text-align:center;">${item.qty}</span>
+        <button class="cart-qty-btn" onclick="changeQty(${i},1)">+</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleCart() {
+  document.getElementById('cart-panel').classList.toggle('open');
+}
+
+function placeOrder() {
+  if (tkCart.length === 0) return;
+  // Build order summary for reference then redirect to Square
+  const summary = tkCart.map(i => `${i.qty}x ${i.name}`).join(', ');
+  const total = tkCart.reduce((s, i) => s + i.price * i.qty, 0).toFixed(2);
+  // Redirect to Square online ordering
+  window.open('https://squareup.com', '_blank');
+  // Show confirmation
+  const panel = document.getElementById('cart-panel');
+  const body = document.getElementById('cart-body');
+  body.innerHTML = '<div class="cart-empty" style="color:#FF5E00;">✅ Redirecting to Square to complete your order!<br/><br/><strong>Order Summary:</strong><br/>' + summary + '<br/>Total: $' + total + '</div>';
 }
 </script>
 
