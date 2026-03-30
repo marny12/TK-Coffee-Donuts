@@ -1,39 +1,82 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>TK Orders</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-
-<body style="font-family:sans-serif;background:#111;color:#fff;padding:20px;">
-
-<h2>🧾 TK Coffee Orders</h2>
-
-<div id="orders"></div>
-
 <script>
+let knownOrderIds = new Set();
+let audioUnlocked = false;
+const alertAudio = new Audio("/assets/alert.mp3");
+
+document.addEventListener("click", async () => {
+  if (audioUnlocked) return;
+  try {
+    await alertAudio.play();
+    alertAudio.pause();
+    alertAudio.currentTime = 0;
+    audioUnlocked = true;
+  } catch (e) {}
+}, { once: true });
+
 async function loadOrders() {
   const res = await fetch("/.netlify/functions/save-order");
   const data = await res.json();
 
   const container = document.getElementById("orders");
 
+  if (!Array.isArray(data.orders)) {
+    container.innerHTML = "<p>No orders found.</p>";
+    return;
+  }
+
+  // sound alert for new orders
+  for (const order of data.orders) {
+    if (!knownOrderIds.has(order.id)) {
+      if (knownOrderIds.size > 0 && audioUnlocked) {
+        try {
+          alertAudio.currentTime = 0;
+          await alertAudio.play();
+        } catch (e) {}
+      }
+      knownOrderIds.add(order.id);
+    }
+  }
+
   container.innerHTML = data.orders.map(order => `
-    <div style="background:#222;padding:15px;margin-bottom:10px;border-radius:10px;">
-      <strong>${order.customer.name}</strong><br>
-      📞 ${order.customer.phone}<br>
-      ⏱ ${order.customer.pickup}<br>
-      💲 $${order.total.toFixed(2)}<br><br>
+    <div style="background:#222;padding:15px;margin-bottom:12px;border-radius:10px;border:1px solid #333;">
+      <strong style="font-size:1.05rem;">${order.customer?.name || "Guest"}</strong><br>
+      📞 ${order.customer?.phone || "-"}<br>
+      ⏱ ${order.customer?.pickup || "ASAP"}<br>
+      💲 $${Number(order.total || 0).toFixed(2)}<br>
+      ✅ Status: <span style="color:${order.status === 'READY' ? '#4ade80' : '#fbbf24'}">${order.status || "NEW"}</span><br><br>
 
       🧁 Items:<br>
-      ${order.items.map(i => `- ${i.name} x${i.qty}`).join("<br>")}
+      ${(order.items || []).map(i => `- ${i.name} x${i.qty}`).join("<br>")}
+
+      <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;">
+        <button onclick="markReady(${order.id})"
+          style="padding:10px 14px;border:none;border-radius:8px;background:#22c55e;color:#111;font-weight:700;cursor:pointer;">
+          Mark READY
+        </button>
+      </div>
     </div>
   `).join("");
+}
+
+async function markReady(orderId) {
+  const res = await fetch("/.netlify/functions/mark-ready", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ orderId })
+  });
+
+  const data = await res.json();
+
+  if (!data.success) {
+    alert("Failed to mark ready: " + (data.error || "Unknown error"));
+    return;
+  }
+
+  loadOrders();
 }
 
 setInterval(loadOrders, 3000);
 loadOrders();
 </script>
-
-</body>
-</html>
