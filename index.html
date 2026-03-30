@@ -1109,11 +1109,52 @@ const SQ_APP_ID='sq0idp-wT6HH067JXc5IW0vnqKy9g';const SQ_LOCATION_ID='LETAZ6CZYV
 async function initSquare(){if(!window.Square)return;try{squarePayments=window.Square.payments(SQ_APP_ID,SQ_LOCATION_ID);squareCard=await squarePayments.card();await squareCard.attach('#card-container');}catch(e){console.error('Square init error:',e);}}
 async function openSquarePayment(){document.getElementById('square-payment-modal').classList.add('open');document.getElementById('sq-amount').value='';document.getElementById('payment-status').textContent='';if(!squareCard)await initSquare();}
 function closeSquarePayment(){document.getElementById('square-payment-modal').classList.remove('open');}
-async function handleSquarePayment(){const amount=parseFloat(document.getElementById('sq-amount').value);if(!amount||amount<=0){document.getElementById('payment-status').innerHTML='<span style="color:#e03030">⚠️ Please enter a valid amount</span>';return;}const btn=document.getElementById('square-pay-btn');btn.textContent='Processing...';btn.disabled=true;try{const result=await squareCard.tokenize();if(result.status==='OK'){document.getElementById('payment-status').innerHTML='<span style="color:#2a9d2a">✅ Payment successful! Thank you! 🍩</span>';btn.textContent='Pay Now 💳';btn.disabled=false;setTimeout(closeSquarePayment,3000);}else{document.getElementById('payment-status').innerHTML='<span style="color:#e03030">❌ Payment failed. Please try again.</span>';btn.textContent='Pay Now 💳';btn.disabled=false;}}catch(e){document.getElementById('payment-status').innerHTML='<span style="color:#e03030">❌ Error processing payment.</span>';btn.textContent='Pay Now 💳';btn.disabled=false;}}
-document.getElementById('square-payment-modal').addEventListener('click',function(e){if(e.target===this)closeSquarePayment();});
-</script>
+async function handleSquarePayment() {
+const statusEl = document.getElementById("payment-status");
+const payBtn = document.getElementById("square-pay-btn");
+const amount = parseFloat(document.getElementById("sq-amount").value);
 
-<!-- MODIFIER MODAL (customer-facing) -->
+if (!amount || amount <= 0) {
+statusEl.innerHTML = '<span style="color:#e03030">Enter valid amount</span>';
+return;
+}
+
+payBtn.disabled = true;
+payBtn.textContent = "Processing...";
+
+try {
+const tokenResult = await squareCard.tokenize();
+
+if (tokenResult.status !== "OK") {
+throw new Error("Card token failed");
+}
+
+const response = await fetch("/.netlify/functions/create-payment", {
+method: "POST",
+headers: {
+"Content-Type": "application/json"
+},
+body: JSON.stringify({
+token: tokenResult.token,
+amount: amount
+})
+});
+
+const data = await response.json();
+
+if (!data.success) {
+throw new Error(data.error || "Payment failed");
+}
+
+statusEl.innerHTML = '<span style="color:#2a9d2a">✅ Payment successful</span>';
+payBtn.textContent = "Paid";
+
+} catch (err) {
+statusEl.innerHTML = `<span style="color:#e03030">${err.message}</span>`;
+payBtn.disabled = false;
+payBtn.textContent = "Pay Now 💳";
+}
+}<!-- MODIFIER MODAL (customer-facing) -->
 
 <div id="modifier-modal">
   <div id="modifier-box">
