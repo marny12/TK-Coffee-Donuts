@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TK Orders</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body style="font-family:sans-serif;background:#111;color:#fff;padding:20px;">
+
+<h2>🧾 TK Coffee Orders</h2>
+
+<div id="orders"></div>
+
+<script>
+async function loadOrders() {
+  const res = await fetch("/.netlify/functions/save-order");
+  const data = await res.json();
+
+  const container = document.getElementById("orders");
+
+  container.innerHTML = data.orders.map(order => `
+    <div style="background:#222;padding:15px;margin-bottom:10px;border-radius:10px;">
+      <strong>${order.customer.name}</strong><br>
+      📞 ${order.customer.phone}<br>
+      ⏱ ${order.customer.pickup}<br>
+      💲 $${order.total.toFixed(2)}<br><br>
+
+      🧁 Items:<br>
+      ${order.items.map(i => `- ${i.name} x${i.qty}`).join("<br>")}
+    </div>
+  `).join("");
+}
+
+setInterval(loadOrders, 3000);
+loadOrders();
+</script>
+
+</body>
+</html>
