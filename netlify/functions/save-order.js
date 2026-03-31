@@ -1,4 +1,9 @@
-const twilio = require("twilio");
+let twilio;
+try {
+  twilio = require("twilio");
+} catch {
+  twilio = null;
+}
 
 let orders = [];
 
@@ -21,7 +26,7 @@ exports.handler = async (event) => {
       const authToken = process.env.TWILIO_AUTH_TOKEN;
       const fromNumber = process.env.TWILIO_PHONE_NUMBER;
 
-      if (accountSid && authToken && fromNumber && order.customer?.phone) {
+      if (twilio && accountSid && authToken && fromNumber && order.customer?.phone) {
         const client = twilio(accountSid, authToken);
 
         let toPhone = order.customer.phone.replace(/\D/g, "");
