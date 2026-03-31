@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "square": "^39.1.0"
+    "square": "^39.1.0",
+    "twilio": "^4.0.0"
   }
 }
