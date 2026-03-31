@@ -1,4 +1,9 @@
-const twilio = require("twilio");
+let twilio;
+try {
+  twilio = require("twilio");
+} catch {
+  twilio = null;
+}
 
 // Shared in-memory store with save-order.js will not persist across cold starts.
 // Good for testing, but later you should move orders to a database.
@@ -42,7 +47,7 @@ exports.handler = async (event) => {
     const authToken = process.env.TWILIO_AUTH_TOKEN;
     const fromNumber = process.env.TWILIO_PHONE_NUMBER;
 
-    if (accountSid && authToken && fromNumber && order.customer?.phone) {
+    if (twilio && accountSid && authToken && fromNumber && order.customer?.phone) {
       const client = twilio(accountSid, authToken);
 
       let toPhone = order.customer.phone.replace(/\D/g, "");
