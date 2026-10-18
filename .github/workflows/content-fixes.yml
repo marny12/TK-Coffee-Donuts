@@ -1,0 +1,89 @@
+name: Apply content fixes
+on:
+  push:
+    paths:
+      - .github/workflows/content-fixes.yml
+permissions:
+  contents: write
+jobs:
+  apply-fixes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply content fixes
+        run: python3 <<'PYEOF'
+import re, sys, pathlib
+
+def check(cond, msg):
+    print(('OK  ' if cond else 'FAIL') + ': ' + msg)
+    if not cond:
+        sys.exit(1)
+
+# ---------- index.html ----------
+p = pathlib.Path('index.html')
+s = p.read_text(encoding='utf-8')
+
+# 1. Remove the under-construction banner markup
+s2 = re.sub(r'<div id="construction-banner"[^>]*>.*?</div>[ \t]*\r?\n?', '', s, flags=re.DOTALL)
+check(s2 != s, 'banner div removed'); s = s2
+
+# 2. Remove banner CSS rules (whole lines mentioning #construction-banner)
+s2 = re.sub(r'^[^\n]*#construction-banner[^\n]*\r?\n', '', s, flags=re.MULTILINE)
+check(s2 != s, 'banner CSS removed'); s = s2
+
+# 3. Reset nav offset (the 44px only existed for the banner)
+check('top: 44px' in s, 'nav top:44px present')
+s = s.replace('top: 44px', 'top: 0', 1)
+
+# 4. Remove banner JavaScript (whole lines)
+for name, pat in [
+    ('initBanner IIFE', r'^[^\n]*\(function initBanner\(\)[^\n]*\r?\n'),
+    ('buildSettingsAdmin def', r'^[^\n]*function buildSettingsAdmin\(\)[^\n]*\r?\n'),
+    ('setBanner def', r'^[^\n]*function setBanner\(show\)[^\n]*\r?\n'),
+    ('buildSettingsAdmin() call', r'^[ \t]*buildSettingsAdmin\(\);[ \t]*\r?\n'),
+]:
+    s2 = re.sub(pat, '', s, flags=re.MULTILINE)
+    check(s2 != s, name + ' removed'); s = s2
+
+# 5. Footer copyright year 2025 -> 2026
+check('\u00a9 2025 TK Coffee' in s, 'footer 2025 present')
+s = s.replace('\u00a9 2025 TK Coffee', '\u00a9 2026 TK Coffee', 1)
+
+# 6. Hide placeholder gallery/video sections (reversible CSS; underlying content kept)
+check(s.count('</style>') == 1, 'single </style>')
+check('#gallery{display:none' not in s, 'gallery hide not already present')
+hide_css = '/* Placeholder gallery/video sections hidden until real photos & video are ready. Re-enable by deleting this rule. */\n#gallery{display:none!important;}'
+s = s.replace('</style>', hide_css + '\n</style>', 1)
+
+p.write_text(s, encoding='utf-8')
+print('index.html updated')
+
+# ---------- menu.html ----------
+p = pathlib.Path('menu.html')
+s = p.read_text(encoding='utf-8')
+n = s.count('Doissant')
+check(n == 2, 'Doissant occurrences == 2 (found %d)' % n)
+s = s.replace('Doissant', 'Dossant')
+p.write_text(s, encoding='utf-8')
+print('menu.html updated')
+
+# ---------- admin.html ----------
+p = pathlib.Path('admin.html')
+s = p.read_text(encoding='utf-8')
+check('<div id="orders">' not in s, 'admin not already wrapped')
+check(s.lstrip().startswith('<script'), 'admin is script-only')
+head = '<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8"/>\n<meta name="viewport" content="width=device-width, initial-scale=1.0"/>\n<title>TK Coffee & Donuts \u2014 Order Dashboard</title>\n</head>\n<body>\n<div id="orders"></div>\n'
+tail = '\n</body>\n</html>\n'
+p.write_text(head + s + tail, encoding='utf-8')
+print('admin.html updated')
+
+print('ALL FIXES APPLIED')
+PYEOF
+      - name: Commit and push fixes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html menu.html admin.html
+          git rm -q .github/workflows/content-fixes.yml
+          git commit -m "Fix site content issues" -m "- Remove under-construction banner (markup, CSS, JS); reset nav offset to top:0" -m "- Footer copyright year 2025 -> 2026" -m "- Standardize menu spelling to Dossant" -m "- Hide placeholder gallery/video sections via reversible CSS (content kept)" -m "- Wrap admin.html script in minimal HTML shell with #orders container" || echo "nothing to commit"
+          git push
