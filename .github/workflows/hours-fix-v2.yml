@@ -1,0 +1,83 @@
+name: Fix hours rendering v2 (self-removes after run)
+
+on:
+  push:
+    paths:
+      - '.github/workflows/hours-fix-v2.yml'
+
+jobs:
+  fix-hours:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Replace defensive hours script with robust version
+        run: |
+          python3 <<'PYEOF'
+          import sys
+          p = 'index.html'
+          s = open(p, encoding='utf-8').read()
+          # Remove the old defensive script
+          old_marker = 'tk-hours-defensive'
+          if old_marker not in s:
+              print('WARNING: old defensive script not found, continuing anyway')
+          else:
+              # Remove from <script>/* tk-hours-defensive to </script>
+              start = s.find('<script>/* tk-hours-defensive')
+              if start == -1:
+                  print('ERROR: could not find start of old script')
+                  sys.exit(1)
+              end = s.find('</script>', start) + len('</script>')
+              s = s[:start] + s[end:]
+              print('Removed old defensive script')
+          # Insert the new robust script before </body>
+          new_script = '''<script>/* tk-hours-robust: aggressively ensures full 7-day hours render */
+          (function(){
+            function fixHours(){
+              var hg=document.getElementById('site-hours-grid');
+              if(!hg) return;
+              var html='<span class="day">Monday</span><span class="time">7:00 AM \u2013 2:30 PM</span>'
+                +'<span class="day">Tuesday</span><span class="time">CLOSED</span>'
+                +'<span class="day">Wednesday</span><span class="time">7:00 AM \u2013 2:30 PM</span>'
+                +'<span class="day">Thursday</span><span class="time">7:00 AM \u2013 2:30 PM</span>'
+                +'<span class="day">Friday</span><span class="time">7:00 AM \u2013 2:30 PM</span>'
+                +'<span class="day">Saturday</span><span class="time">7:00 AM \u2013 2:30 PM</span>'
+                +'<span class="day">Sunday</span><span class="time">7:00 AM \u2013 2:30 PM</span>';
+              // Only overwrite if times are missing/blank (avoid clobbering admin edits that are non-blank)
+              var times=hg.querySelectorAll('.time');
+              var ok=times.length===7;
+              for(var i=0;i<times.length&&ok;i++){ if(!times[i].textContent.trim()) ok=false; }
+              if(!ok) hg.innerHTML=html;
+            }
+            fixHours();
+            document.addEventListener('DOMContentLoaded',fixHours);
+            window.addEventListener('load',fixHours);
+            setTimeout(fixHours,500);
+            setTimeout(fixHours,1500);
+            setTimeout(fixHours,3000);
+          })();
+          </script>'''
+          if '</body>' not in s:
+              print('ERROR: no </body> found')
+              sys.exit(1)
+          s = s.replace('</body>', new_script + '\n</body>', 1)
+          open(p, 'w', encoding='utf-8').write(s)
+          print('Inserted robust hours script')
+          # Verify
+          s2 = open(p, encoding='utf-8').read()
+          assert 'tk-hours-robust' in s2, 'new script marker missing!'
+          assert 'tk-hours-defensive' not in s2, 'old script still present!'
+          print('Verification passed')
+          PYEOF
+      - name: Commit and self-remove workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git rm --cached .github/workflows/hours-fix-v2.yml
+          rm .github/workflows/hours-fix-v2.yml
+          git commit -m "Replace hours fix with robust multi-trigger version" || echo "nothing to commit"
+          git push
