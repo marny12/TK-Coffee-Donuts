@@ -1,0 +1,36 @@
+name: Fix menu footer year
+on:
+  push:
+    paths:
+      - .github/workflows/menu-footer-fix.yml
+permissions:
+  contents: write
+jobs:
+  fix-footer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update menu.html footer to 2026
+        run: |
+          python3 <<'PYEOF'
+          import sys, pathlib
+          p = pathlib.Path('menu.html')
+          s = p.read_text(encoding='utf-8')
+          if '\u00a9 2026' in s or '&copy; 2026' in s or '\u00a92026' in s:
+              print('menu.html footer already 2026')
+          else:
+              if s.count('\u00a9 2025') == 0 and s.count('&copy; 2025') == 0:
+                  print('FAIL: no 2025 footer found in menu.html'); sys.exit(1)
+              s = s.replace('\u00a9 2025', '\u00a9 2026').replace('&copy; 2025', '&copy; 2026')
+              p.write_text(s, encoding='utf-8')
+              print('menu.html footer updated to 2026')
+          print('MENU FOOTER FIX APPLIED')
+          PYEOF
+      - name: Commit and push fix
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add menu.html
+          git rm -q .github/workflows/menu-footer-fix.yml
+          git commit -m "Update menu.html footer copyright to 2026" || echo "nothing to commit"
+          git push
