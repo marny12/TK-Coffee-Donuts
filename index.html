@@ -28,7 +28,7 @@
   body { background: transparent; color: #2a0f02; font-family: ‘DM Sans’, sans-serif; }
 
 nav {
-position: fixed; top: 44px; left: 0; right: 0; z-index: 100;
+position: fixed; top: 0; left: 0; right: 0; z-index: 100;
 display: flex; justify-content: space-between; align-items: center;
 padding: 18px 40px;
 background: rgba(28,10,3,0.82);
@@ -213,9 +213,6 @@ section { padding: 60px 20px; }
 #side-menu { position: fixed; top: 0; right: -320px; width: 300px; height: 100vh; background: #fff; z-index: 10004; box-shadow: -4px 0 30px rgba(0,0,0,0.15); transition: right 0.3s ease; display: flex; flex-direction: column; padding: 80px 32px 40px; font-family: ‘DM Sans’, sans-serif; }
 #side-menu.open { right: 0; }
 
-#construction-banner { position: fixed; top: 0; left: 0; right: 0; z-index: 99999; background: linear-gradient(135deg, #FF5E00, #FFD600); padding: 2px 10px; display: flex; align-items: center; justify-content: center; gap: 6px; font-family: ‘DM Sans’, sans-serif; box-shadow: 0 1px 6px rgba(255,94,0,0.2); }
-#construction-banner p { color: #1c0a03; font-weight: 600; font-size: 0.55rem; margin: 0; text-align: center; line-height: 1.2; }
-#construction-banner span { font-size: 0.55rem; }
 #close-banner { background: rgba(28,10,3,0.15); border: none; cursor: pointer; width: 14px; height: 14px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.5rem; color: #1c0a03; font-weight: 900; flex-shrink: 0; transition: background 0.2s; }
 #close-banner:hover { background: rgba(28,10,3,0.3); }
 
@@ -430,6 +427,8 @@ MODIFIER ADMIN PANEL STYLES
 .mod-stat { background:#faf6f0; border:1px solid #f0e0d0; border-radius:10px; padding:10px; text-align:center; }
 .mod-stat-val { font-weight:800; font-size:1.2rem; color:#FF5E00; }
 .mod-stat-lbl { font-size:0.68rem; color:#7a5a40; margin-top:2px; }
+/* Placeholder gallery/video sections hidden until real photos & video are ready. Re-enable by deleting this rule. */
+#gallery{display:none!important;}
 </style>
 
 <script>// showTab defined below</script>
@@ -606,10 +605,6 @@ document.addEventListener("DOMContentLoaded",()=>{
 
 <!-- CONSTRUCTION BANNER -->
 
-<div id="construction-banner" style="display:none;">
-  <span>🚧</span>
-  <p>Our website is currently under construction — exciting updates coming soon! Visit us at <strong>1155 W State Rd. 434, Ste. 103, Longwood, FL 32750</strong> or order on <strong>Uber Eats &amp; DoorDash</strong>. 🍩☕</p>
-</div>
 
 <nav>
   <div style="display:flex;flex-direction:column;line-height:1.1;cursor:pointer;user-select:none;" onclick="window.location='#'">
@@ -898,7 +893,7 @@ document.getElementById('apply-overlay').addEventListener('click',function(e){if
 <footer>
   <div class="footer-brand">TK Coffee &amp; Donuts</div>
   <p>tkcoffeeanddonuts.com</p>
-  <p style="margin-top:8px;">© 2025 TK Coffee &amp; Donuts LLC. All rights reserved.</p>
+  <p style="margin-top:8px;">© 2026 TK Coffee &amp; Donuts LLC. All rights reserved.</p>
 </footer>
 
 <script>
@@ -1005,7 +1000,6 @@ function buildAdminForms(){
   // MODIFIERS
   buildModifiersAdmin();
   // SETTINGS & MEDIA
-  buildSettingsAdmin();
   buildMediaAdmin();
 }
 
@@ -1103,9 +1097,6 @@ function removeVideo(){localStorage.removeItem('tk_video_url');const area=docume
 
 <script>
 // SETTINGS
-(function initBanner(){const show=localStorage.getItem('tk_banner_visible')!=='false';const banner=document.getElementById('construction-banner');if(!banner)return;if(show){banner.style.display='flex';document.body.style.paddingTop='44px';}else{banner.style.display='none';document.body.style.paddingTop='0';}})();
-function buildSettingsAdmin(){const s=document.getElementById('admin-settings');if(!s)return;const bannerOn=localStorage.getItem('tk_banner_visible')!=='false';s.innerHTML=`<div class="admin-section-label">🚧 Construction Banner</div><div class="media-admin-item"><label style="margin-bottom:12px;">Show "Under Construction" banner to customers?</label><div style="display:flex;gap:12px;"><button class="media-upload-btn" style="background:${bannerOn?'linear-gradient(135deg,#FF5E00,#FFD600)':'rgba(0,0,0,0.08)'};color:${bannerOn?'#1c0a03':'#7a5a40'};" onclick="setBanner(true)">✅ Show Banner</button><button class="media-upload-btn" style="background:${!bannerOn?'linear-gradient(135deg,#FF5E00,#FFD600)':'rgba(0,0,0,0.08)'};color:${!bannerOn?'#1c0a03':'#7a5a40'};" onclick="setBanner(false)">❌ Hide Banner</button></div><p style="font-size:0.78rem;color:#7a5a40;margin-top:10px;">Hides or shows the banner instantly — no GitHub upload needed!</p></div>`;}
-function setBanner(show){localStorage.setItem('tk_banner_visible',show?'true':'false');const banner=document.getElementById('construction-banner');if(banner){banner.style.display=show?'flex':'none';document.body.style.paddingTop=show?'44px':'0';}buildSettingsAdmin();showToast(show?'✅ Banner is now visible!':'✅ Banner hidden!');}
 </script>
 
 <!-- SQUARE PAYMENT MODAL -->

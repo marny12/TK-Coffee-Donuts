@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>TK Coffee & Donuts — Order Dashboard</title>
+</head>
+<body>
+<div id="orders"></div>
 <script>
 let knownOrderIds = new Set();
 let audioUnlocked = false;
@@ -80,3 +89,5 @@ async function markReady(orderId) {
 setInterval(loadOrders, 3000);
 loadOrders();
 </script>
+</body>
+</html>
