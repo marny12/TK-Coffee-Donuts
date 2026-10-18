@@ -1658,30 +1658,32 @@ document.getElementById('mod-admin-overlay').addEventListener('click', function(
 });
 </script>
 
-<script>/* tk-hours-defensive: ensures the full 7-day store hours render even if the primary PRICES-based rendering leaves times blank. */
-document.addEventListener('DOMContentLoaded', function() {
-  var hg = document.getElementById('site-hours-grid');
-  if (!hg) return;
-  var times = hg.querySelectorAll('.time');
-  var missing = times.length < 7;
-  for (var i = 0; i < times.length && !missing; i++) {
-    if (!times[i].textContent.trim()) missing = true;
+
+<script>/* tk-hours-robust: aggressively ensures full 7-day hours render */
+(function(){
+  function fixHours(){
+    var hg=document.getElementById('site-hours-grid');
+    if(!hg) return;
+    var html='<span class="day">Monday</span><span class="time">7:00 AM – 2:30 PM</span>'
+      +'<span class="day">Tuesday</span><span class="time">CLOSED</span>'
+      +'<span class="day">Wednesday</span><span class="time">7:00 AM – 2:30 PM</span>'
+      +'<span class="day">Thursday</span><span class="time">7:00 AM – 2:30 PM</span>'
+      +'<span class="day">Friday</span><span class="time">7:00 AM – 2:30 PM</span>'
+      +'<span class="day">Saturday</span><span class="time">7:00 AM – 2:30 PM</span>'
+      +'<span class="day">Sunday</span><span class="time">7:00 AM – 2:30 PM</span>';
+    // Only overwrite if times are missing/blank (avoid clobbering admin edits that are non-blank)
+    var times=hg.querySelectorAll('.time');
+    var ok=times.length===7;
+    for(var i=0;i<times.length&&ok;i++){ if(!times[i].textContent.trim()) ok=false; }
+    if(!ok) hg.innerHTML=html;
   }
-  if (missing) {
-    var hours = [
-      { day: 'Monday', time: '7:00 AM – 2:30 PM' },
-      { day: 'Tuesday', time: 'CLOSED' },
-      { day: 'Wednesday', time: '7:00 AM – 2:30 PM' },
-      { day: 'Thursday', time: '7:00 AM – 2:30 PM' },
-      { day: 'Friday', time: '7:00 AM – 2:30 PM' },
-      { day: 'Saturday', time: '7:00 AM – 2:30 PM' },
-      { day: 'Sunday', time: '7:00 AM – 2:30 PM' }
-    ];
-    hg.innerHTML = hours.map(function(h) {
-      return '<span class="day">' + h.day + '</span><span class="time">' + h.time + '</span>';
-    }).join('');
-  }
-});
+  fixHours();
+  document.addEventListener('DOMContentLoaded',fixHours);
+  window.addEventListener('load',fixHours);
+  setTimeout(fixHours,500);
+  setTimeout(fixHours,1500);
+  setTimeout(fixHours,3000);
+})();
 </script>
 </body>
 </html>
