@@ -1,2 +1,2 @@
-/.well-known/acme-challenge/* /acme-challenge-files/:splat 200!
+/.well-known/acme-challenge/* /.netlify/functions/acme-challenge/:splat 200!
 /* /maintenance.html 503!
