@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/((?!maintenance.html|favicon.ico|robots.txt|images/|assets/|css/|js/).*)",
+      "destination": "/maintenance.html",
+      "permanent": false
+    }
+  ]
+}
