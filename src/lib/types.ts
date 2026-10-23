@@ -43,6 +43,7 @@ export interface MediaState {
   bearArt: string;
   kolacheArt: string;
   icedCoffeeArt: string;
+  matchaArt: string;
   shopVideo: string;
   instagramSync: boolean;
 }

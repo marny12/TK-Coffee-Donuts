@@ -253,6 +253,19 @@ export default function ShopApp({ initial }: { initial: BootstrapState }) {
           <figure className="favorites-photo"><img src={data.media.favoritesPhoto} alt="TK Coffee & Donuts shop photo" /></figure>
         </section>
 
+        <section className="section matcha-section">
+          <div className="section-heading matcha-heading">
+            <p className="eyebrow">Matcha &amp; Teas</p>
+            <h2>Whisked to order, the real way</h2>
+          </div>
+          <figure className="matcha-card">
+            <img src={data.media.matchaArt || '/images/matcha-whisk.jpg'} alt="Hand-drawn bamboo matcha whisk (chasen) in a bowl of frothy green matcha, with a wooden spoon of matcha powder" />
+          </figure>
+          <p className="matcha-copy">No scoops from a mix — real matcha, whisked by hand with a bamboo chasen until it froths, the way it has always been done. It is the heart of our house favorite, made with ceremonial-grade Matcha Kari.</p>
+          <p className="matcha-price">House favorite · Iced Matcha Latte <strong>$6.19</strong></p>
+          <button className="primary-button" onClick={() => openMenu('matcha')}>Order Matcha &amp; Teas</button>
+        </section>
+
         <section className="section feature-section">
           <div className="section-heading">
             <p className="eyebrow">From our mural wall</p>

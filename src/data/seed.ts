@@ -174,6 +174,7 @@ export function createSeedState(): AppState {
       bearArt: '/images/bear-balloon.jpg',
       kolacheArt: '/images/kolache-mural.jpg',
       icedCoffeeArt: '/images/iced-coffee-mural.jpg',
+      matchaArt: '/images/matcha-whisk.jpg',
       shopVideo: '',
       instagramSync: true,
     },
