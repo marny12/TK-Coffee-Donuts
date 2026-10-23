@@ -44,6 +44,7 @@ export interface MediaState {
   kolacheArt: string;
   icedCoffeeArt: string;
   matchaArt: string;
+  neonSignPhoto: string;
   shopVideo: string;
   instagramSync: boolean;
 }

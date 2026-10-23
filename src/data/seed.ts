@@ -175,6 +175,7 @@ export function createSeedState(): AppState {
       kolacheArt: '/images/kolache-mural.jpg',
       icedCoffeeArt: '/images/iced-coffee-mural.jpg',
       matchaArt: '/images/matcha-whisk.jpg',
+      neonSignPhoto: '/neon-sign.jpg',
       shopVideo: '',
       instagramSync: true,
     },

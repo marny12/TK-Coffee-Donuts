@@ -322,18 +322,27 @@ export default function ShopApp({ initial }: { initial: BootstrapState }) {
 
         <section className="section visit-section" id="visit">
           <div className="visit-panel">
-            <div>
-              <p className="eyebrow">Visit us</p>
-              <h2>Coffee first, donuts close behind</h2>
-              <p className="visit-address">1155 W State Rd 434 #103<br />Longwood, FL 32750</p>
-              <a className="primary-button" href="tel:+13219721239">Call (321) 972-1239</a>
-            </div>
-            <div className="hours-card">
-              <h3>Hours</h3>
-              {HOURS.map(([day, time]) => (
-                <p key={day} className={time === 'CLOSED' ? 'closed-row' : ''}><span>{day}</span><strong>{time === 'CLOSED' ? 'Closed Tuesdays' : time}</strong></p>
-              ))}
-              <p className="hours-note">{openLabel}</p>
+            <figure className="neon-card">
+              <img src={data.media.neonSignPhoto || '/neon-sign.jpg'} alt="TK Coffee & Donuts storefront window at dusk — the neon sign glows: This is your sign to get a donut & coffee, your daily duo, with the donut case inside" />
+              <figcaption>
+                <strong>This is your sign.</strong>
+                <span>Find us under the neon on W State Rd 434 — donuts in the case, coffee on.</span>
+              </figcaption>
+            </figure>
+            <div className="visit-info">
+              <div>
+                <p className="eyebrow">Visit us</p>
+                <h2>Coffee first, donuts close behind</h2>
+                <p className="visit-address">1155 W State Rd 434 #103<br />Longwood, FL 32750</p>
+                <a className="primary-button" href="tel:+13219721239">Call (321) 972-1239</a>
+              </div>
+              <div className="hours-card">
+                <h3>Hours</h3>
+                {HOURS.map(([day, time]) => (
+                  <p key={day} className={time === 'CLOSED' ? 'closed-row' : ''}><span>{day}</span><strong>{time === 'CLOSED' ? 'Closed Tuesdays' : time}</strong></p>
+                ))}
+                <p className="hours-note">{openLabel}</p>
+              </div>
             </div>
           </div>
         </section>

@@ -20,7 +20,7 @@ const GROUP_LABELS: Record<ModifierGroup, string> = {
   addon: 'Add-ons',
 };
 
-const MEDIA_FIELDS: Array<{ key: 'heroPhoto' | 'favoritesPhoto' | 'dubaiPhoto' | 'bearArt' | 'kolacheArt' | 'icedCoffeeArt' | 'matchaArt' | 'shopVideo'; label: string; video?: boolean }> = [
+const MEDIA_FIELDS: Array<{ key: 'heroPhoto' | 'favoritesPhoto' | 'dubaiPhoto' | 'bearArt' | 'kolacheArt' | 'icedCoffeeArt' | 'matchaArt' | 'neonSignPhoto' | 'shopVideo'; label: string; video?: boolean }> = [
   { key: 'heroPhoto', label: 'Hero photo' },
   { key: 'favoritesPhoto', label: 'Favorites photo' },
   { key: 'dubaiPhoto', label: 'Dubai spotlight photo' },
@@ -28,6 +28,7 @@ const MEDIA_FIELDS: Array<{ key: 'heroPhoto' | 'favoritesPhoto' | 'dubaiPhoto' |
   { key: 'kolacheArt', label: 'Kolache mural art' },
   { key: 'icedCoffeeArt', label: 'Iced coffee mural art' },
   { key: 'matchaArt', label: 'Matcha whisk art' },
+  { key: 'neonSignPhoto', label: 'Neon sign storefront photo' },
   { key: 'shopVideo', label: 'Shop video', video: true },
 ];
 

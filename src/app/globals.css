@@ -161,7 +161,13 @@ h3 { color: var(--ink); }
 .instagram-section .text-link { display: inline-block; margin-top: 0.8rem; }
 
 .visit-section { max-width: none; background: var(--blue-pale); }
-.visit-panel { max-width: 1150px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; }
+.visit-panel { max-width: 1150px; margin: 0 auto; display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 2rem; align-items: center; }
+.visit-info { display: grid; gap: 1.5rem; }
+.neon-card { margin: 0; background: white; padding: 0.55rem; border-radius: 26px; box-shadow: var(--shadow); border: 1px solid white; }
+.neon-card img { width: 100%; height: auto; display: block; border-radius: 20px; }
+.neon-card figcaption { padding: 0.7rem 0.35rem 0.25rem; }
+.neon-card figcaption strong { display: block; font-family: Georgia, "Times New Roman", serif; font-size: 1.35rem; color: #cf1826; margin-bottom: 0.2rem; }
+.neon-card figcaption span { color: #3b2312; line-height: 1.45; }
 .visit-address { font-size: 1.2rem; line-height: 1.5; color: var(--blue); font-weight: 800; }
 .hours-card { background: white; border-radius: var(--radius); padding: 1.3rem; box-shadow: var(--shadow); }
 .hours-card h3 { margin-top: 0; }
