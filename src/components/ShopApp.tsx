@@ -326,7 +326,7 @@ export default function ShopApp({ initial }: { initial: BootstrapState }) {
               <img src={data.media.neonSignPhoto || '/neon-sign.jpg'} alt="TK Coffee & Donuts storefront window at dusk — the neon sign glows: This is your sign to get a donut & coffee, your daily duo, with the donut case inside" />
               <figcaption>
                 <strong>This is your sign.</strong>
-                <span>Find us under the neon on W State Rd 434 — donuts in the case, coffee on.</span>
+                <span>Donuts in the case, coffee on.</span>
               </figcaption>
             </figure>
             <div className="visit-info">
