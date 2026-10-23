@@ -1,0 +1,12 @@
+node_modules/
+.next/
+.data/
+.env*.local
+.env
+public/uploads/*
+!public/uploads/.gitkeep
+*.log
+.DS_Store
+next-env.d.ts
+*.tsbuildinfo
+.well-known/

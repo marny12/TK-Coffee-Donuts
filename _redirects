@@ -1,2 +1,0 @@
-/.well-known/acme-challenge/* /.netlify/functions/acme-challenge/:splat 200!
-/* /maintenance.html 503!
