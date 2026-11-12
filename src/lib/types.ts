@@ -82,6 +82,12 @@ export interface Order {
   lines: OrderLine[];
   totalCents: number;
   status: 'New';
+  /** TK POS order id once the order has been forwarded to the shop POS. */
+  posOrderId?: string;
+  /** Square payment id when the customer paid online. */
+  posPaymentRef?: string;
+  /** True when the order was paid online through Square. */
+  paidOnline?: boolean;
 }
 
 export interface Customer {
@@ -127,5 +133,12 @@ export interface BootstrapState {
   media: MediaState;
   session: PublicSession;
   myOrders: Order[];
+  /** Card pay (Square) is exposed only when fully configured server-side. */
+  payments: {
+    squarePayEnabled: boolean;
+    squareApplicationId?: string;
+    squareLocationId?: string;
+    squareSdkUrl?: string;
+  };
   adminData?: { orders: Order[]; applications: Application[] };
 }

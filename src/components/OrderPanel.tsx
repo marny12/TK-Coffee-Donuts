@@ -4,7 +4,7 @@ import { BalloonStripe, DoughSketch } from '@/components/Art';
 import { CATEGORIES } from '@/data/seed';
 import { defaultSelections, lineKey, money, optionsFor, selectionLabels, unitPriceCents } from '@/lib/pricing';
 import type { BootstrapState, CartSelection, CategoryId, MenuItem, Order, OrderLine } from '@/lib/types';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 export type PanelView = 'categories' | 'review' | 'confirmation';
 
@@ -58,6 +58,11 @@ export default function OrderPanel(props: Props) {
   const { data, cart } = props;
   const [draft, setDraft] = useState<Draft | null>(null);
   const [checkoutPath, setCheckoutPath] = useState<'guest' | 'account'>('guest');
+  const [payMethod, setPayMethod] = useState<'pickup' | 'square'>('pickup');
+  const [note, setNote] = useState('');
+  const [squareReady, setSquareReady] = useState(false);
+  const squarePaymentsRef = useRef<unknown>(null);
+  const squareCardRef = useRef<{ tokenize: () => Promise<{ status: string; token?: string }> } | null>(null);
   const [guestName, setGuestName] = useState('');
   const [guestPhone, setGuestPhone] = useState('');
   const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
@@ -124,9 +129,60 @@ export default function OrderPanel(props: Props) {
     props.onNotify(authMode === 'register' ? 'Account created — you’re signed in.' : 'Signed in. Welcome back!');
   }
 
+  // Square Web Payments SDK — loaded only when the customer picks
+  // "Pay now with card" AND the server says card pay is fully on
+  // (data.payments). The application id + location id are public ids;
+  // the access token never reaches the browser.
+  useEffect(() => {
+    if (payMethod !== 'square' || !data.payments?.squarePayEnabled || squareCardRef.current) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const win = window as unknown as { Square?: { payments: (appId: string, locationId: string) => Promise<{ card: () => Promise<{ attach: (selector: string) => Promise<void> }> }> } };
+        if (!win.Square) {
+          await new Promise<void>((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = data.payments!.squareSdkUrl!;
+            script.onload = () => resolve();
+            script.onerror = () => reject(new Error('sdk'));
+            document.head.appendChild(script);
+          });
+        }
+        if (cancelled || !win.Square) return;
+        const payments = await win.Square.payments(data.payments!.squareApplicationId!, data.payments!.squareLocationId!);
+        const card = await payments.card();
+        if (cancelled) return;
+        await card.attach('#tk-square-card');
+        squarePaymentsRef.current = payments;
+        squareCardRef.current = card as unknown as { tokenize: () => Promise<{ status: string; token?: string }> };
+        setSquareReady(true);
+      } catch {
+        if (!cancelled) setError('The card box could not load — please pay at the shop instead.');
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [payMethod, data.payments]);
+
   async function placeOrder() {
     setError('');
     setPlacing(true);
+    let sourceId: string | undefined;
+    if (payMethod === 'square') {
+      if (!squareCardRef.current) {
+        setError('The card box is still loading — give it a second and try again.');
+        setPlacing(false);
+        return;
+      }
+      try {
+        const result = await squareCardRef.current.tokenize();
+        if (result.status !== 'OK' || !result.token) throw new Error('tokenize');
+        sourceId = result.token;
+      } catch {
+        setError('The card did not check out — please re-enter it, or choose pay at the shop.');
+        setPlacing(false);
+        return;
+      }
+    }
     const response = await fetch('/api/orders', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
@@ -134,6 +190,9 @@ export default function OrderPanel(props: Props) {
         customerType: checkoutPath,
         name: guestName,
         phone: guestPhone,
+        note,
+        payMethod,
+        sourceId,
         lines: cart.map((line) => ({ itemId: line.itemId, variant: line.variant, quantity: line.quantity, selections: line.selections })),
       }),
     });
@@ -227,7 +286,27 @@ export default function OrderPanel(props: Props) {
             })}
             {cart.length > 0 && (
               <>
-                <div className="review-total"><span>Total due at pickup</span><strong>{money(total)}</strong></div>
+                <div className="review-total"><span>{payMethod === 'square' ? 'Total' : 'Total due at pickup'}</span><strong>{money(total)}</strong></div>
+                <p className="signed-in-note">
+                  {payMethod === 'square'
+                    ? 'Pay now and just give your name at the counter. Your confirmation shows the final total charged.'
+                    : 'Order ahead — pay at the shop when you pick up. Tax is figured at the shop, and your confirmation shows the final total.'}
+                </p>
+                <div className="checkout-paths" role="tablist" aria-label="How to pay">
+                  <button className={payMethod === 'pickup' ? 'active' : ''} onClick={() => setPayMethod('pickup')}>Pay at the shop when you pick up</button>
+                  {data.payments?.squarePayEnabled && (
+                    <button className={payMethod === 'square' ? 'active' : ''} onClick={() => setPayMethod('square')}>Pay now with card</button>
+                  )}
+                </div>
+                {payMethod === 'square' && (
+                  <div className="checkout-form">
+                    <div id="tk-square-card" className="square-card-box" />
+                    <p className="signed-in-note">{squareReady ? 'Card payment runs through Square — your card details never touch our site.' : 'Loading the secure card box…'}</p>
+                  </div>
+                )}
+                <div className="checkout-form">
+                  <label>Note for the shop (optional)<input value={note} onChange={(event) => setNote(event.target.value)} placeholder="Anything we should know?" /></label>
+                </div>
                 <div className="checkout-paths" role="tablist" aria-label="Checkout path">
                   <button className={checkoutPath === 'guest' ? 'active' : ''} onClick={() => setCheckoutPath('guest')}>Continue as guest</button>
                   <button className={checkoutPath === 'account' ? 'active' : ''} onClick={() => setCheckoutPath('account')}>Log in / Create account</button>
@@ -257,7 +336,7 @@ export default function OrderPanel(props: Props) {
                   <p className="signed-in-note">Signed in as {data.session.customer.name} · {data.session.customer.phone} · {data.session.customer.email}. This order will be saved to your account for easy reordering.</p>
                 )}
                 {error && <p className="form-error" role="alert">{error}</p>}
-                <button className="primary-button place-order" disabled={placing} onClick={placeOrder}>{placing ? 'Placing…' : 'Place order — pay at the counter'}</button>
+                <button className="primary-button place-order" disabled={placing} onClick={placeOrder}>{placing ? 'Placing…' : payMethod === 'square' ? 'Pay now & place order' : 'Place order — pay at the shop'}</button>
                 <a className="call-link" href="tel:+13219721239">Prefer to talk? Call (321) 972-1239</a>
               </>
             )}
@@ -267,9 +346,13 @@ export default function OrderPanel(props: Props) {
         {props.view === 'confirmation' && props.confirmation && (
           <div className="panel-scroll confirmation-view">
             <div className="confirmation-card">
-              <p className="eyebrow">Order placed!</p>
-              <h3>Order #{props.confirmation.number} is saved</h3>
-              <p>{money(props.confirmation.totalCents)} due at pickup. We’ll take care of you, {props.confirmation.customerName.split(' ')[0]}.</p>
+              <p className="eyebrow">Order received!</p>
+              <h3>Order #{props.confirmation.number} — we’ve got it</h3>
+              {props.confirmation.paidOnline ? (
+                <p>Paid online — {money(props.confirmation.totalCents)} charged to your card. Just give your name at the counter, {props.confirmation.customerName.split(' ')[0]}.</p>
+              ) : (
+                <p>{money(props.confirmation.totalCents)} — pay at the shop when you pick up. We’ll take care of you, {props.confirmation.customerName.split(' ')[0]}.</p>
+              )}
               <ul>{props.confirmation.lines.map((line) => <li key={line.key}>{line.quantity} × {line.name}{line.selectionLabels.length ? ` — ${line.selectionLabels.join(' · ')}` : ''}</li>)}</ul>
               <a className="primary-button" href="tel:+13219721239">Call the shop: (321) 972-1239</a>
               <button className="secondary-button" onClick={() => { props.onConfirmation(null); props.onViewChange('categories'); }}>Start another order</button>

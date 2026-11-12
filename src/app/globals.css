@@ -418,3 +418,6 @@ textarea { resize: vertical; }
   .gate-hours { background: var(--creme-2); }
   .hero-sketch .sketch-brown, .dough-sketch .sketch-brown { stroke: #e8c39a; }
 }
+
+/* Square Web Payments card box (OrderPanel) */
+.square-card-box { min-height: 96px; }

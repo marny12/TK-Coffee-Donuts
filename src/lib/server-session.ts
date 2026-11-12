@@ -1,4 +1,5 @@
 import { ACCESS_COOKIE, ADMIN_COOKIE, CUSTOMER_COOKIE, verifyToken, type SessionPayload } from '@/lib/auth';
+import { squarePublicConfig } from '@/lib/square';
 import type { AppState, BootstrapState } from '@/lib/types';
 import { cookies } from 'next/headers';
 
@@ -34,6 +35,7 @@ export function buildBootstrap(state: AppState, sessions: RequestSessions): Boot
         : undefined,
     },
     myOrders: customer ? state.orders.filter((order) => order.customerId === customer.id) : [],
+    payments: squarePublicConfig(),
     adminData: sessions.admin ? { orders: state.orders, applications: state.applications } : undefined,
   };
 }
