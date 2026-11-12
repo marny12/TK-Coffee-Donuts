@@ -25,10 +25,22 @@ export function verifyPasswordHash(password: string, stored: string | undefined)
 
 export type PasswordCheck = { ok: true; mode: 'env' | 'dev-placeholder' } | { ok: false; mode: 'locked' | 'wrong' };
 
+function plainPasswordMatches(candidate: string, configured: string): boolean {
+  const a = Buffer.from(candidate, 'utf8');
+  const b = Buffer.from(configured, 'utf8');
+  if (a.length !== b.length) return false;
+  return timingSafeEqual(a, b);
+}
+
 export function checkConfiguredPassword(kind: 'access' | 'admin', candidate: string): PasswordCheck {
-  const envName = kind === 'access' ? 'SITE_ACCESS_PASSWORD_HASH' : 'ADMIN_PASSWORD_HASH';
-  const configured = process.env[envName];
-  if (configured) return verifyPasswordHash(candidate, configured) ? { ok: true, mode: 'env' } : { ok: false, mode: 'wrong' };
+  const hashName = kind === 'access' ? 'SITE_ACCESS_PASSWORD_HASH' : 'ADMIN_PASSWORD_HASH';
+  const configuredHash = process.env[hashName];
+  if (configuredHash) return verifyPasswordHash(candidate, configuredHash) ? { ok: true, mode: 'env' } : { ok: false, mode: 'wrong' };
+
+  // Simple option: the password itself stored as an env var. The hash above wins when both are set.
+  const plainName = kind === 'access' ? 'SITE_ACCESS_PASSWORD' : 'ADMIN_PASSWORD';
+  const configuredPlain = process.env[plainName];
+  if (configuredPlain) return plainPasswordMatches(candidate, configuredPlain) ? { ok: true, mode: 'env' } : { ok: false, mode: 'wrong' };
 
   const devAllowed = process.env.NODE_ENV !== 'production' && process.env.ALLOW_DEV_PLACEHOLDERS === 'true';
   if (devAllowed) {
@@ -52,7 +64,7 @@ function signingSecret(): string {
   if (process.env.NODE_ENV !== 'production') return 'tk-local-development-signing-secret';
   // Production last-mile setup sets AUTH_SECRET. This derivation only keeps a misconfigured
   // deployment from becoming unsigned; it is not a substitute for setting AUTH_SECRET.
-  return `${process.env.SITE_ACCESS_PASSWORD_HASH ?? ''}:${process.env.ADMIN_PASSWORD_HASH ?? ''}:tk`;
+  return `${process.env.SITE_ACCESS_PASSWORD_HASH ?? ''}:${process.env.ADMIN_PASSWORD_HASH ?? ''}:${process.env.SITE_ACCESS_PASSWORD ?? ''}:${process.env.ADMIN_PASSWORD ?? ''}:tk`;
 }
 
 async function hmacKey(secret: string): Promise<CryptoKey> {

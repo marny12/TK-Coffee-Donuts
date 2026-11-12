@@ -10,7 +10,7 @@ function maintenanceOn(): boolean {
 function signingSecret(): string {
   if (process.env.AUTH_SECRET) return process.env.AUTH_SECRET;
   if (process.env.NODE_ENV !== 'production') return 'tk-local-development-signing-secret';
-  return `${process.env.SITE_ACCESS_PASSWORD_HASH ?? ''}:${process.env.ADMIN_PASSWORD_HASH ?? ''}:tk`;
+  return `${process.env.SITE_ACCESS_PASSWORD_HASH ?? ''}:${process.env.ADMIN_PASSWORD_HASH ?? ''}:${process.env.SITE_ACCESS_PASSWORD ?? ''}:${process.env.ADMIN_PASSWORD ?? ''}:tk`;
 }
 
 function fromBase64Url(value: string): Uint8Array {
