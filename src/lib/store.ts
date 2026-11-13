@@ -6,37 +6,65 @@ import path from 'node:path';
 /**
  * Env-driven data layer.
  * - DATABASE_URL set: Postgres (Neon in production), one JSONB state document in tk_app_state.
- * - DATABASE_URL omitted: local JSON file under .data/ for development and build verification.
+ * - DATABASE_URL omitted: local JSON file for development and build verification.
+ *   File location: TK_STORE_FILE (full path) wins; else TK_DATA_DIR (directory);
+ *   else on Vercel '/tmp/tk-data' (the only writable place in a serverless
+ *   function — the app bundle under /var/task is read-only); else '.data/'.
+ *   If the file cannot be read or written at all, the store falls back to a
+ *   purely in-memory copy instead of throwing: the POS is the working book
+ *   for orders, so this store is a receipt/state copy and losing persistence
+ *   on serverless is acceptable — crashing is not.
  * The API surface is the same either way; DB provisioning is the deployment last mile.
  */
 
 const STATE_KEY = 'primary';
 let pgPool: import('pg').Pool | null = null;
 let writeChain: Promise<unknown> = Promise.resolve();
+let memoryState: AppState | null = null;
+let memoryMode = false;
 
 function localFile(): string {
-  return process.env.TK_STORE_FILE || path.join(process.cwd(), '.data', 'tk-store.json');
+  if (process.env.TK_STORE_FILE) return process.env.TK_STORE_FILE;
+  const dir =
+    process.env.TK_DATA_DIR ||
+    (process.env.VERCEL ? '/tmp/tk-data' : path.join(process.cwd(), '.data'));
+  return path.join(dir, 'tk-store.json');
 }
 
 async function loadFromFile(): Promise<AppState> {
+  if (memoryMode && memoryState) return structuredClone(memoryState);
   const file = localFile();
   try {
     const raw = await fs.readFile(file, 'utf8');
     return JSON.parse(raw) as AppState;
   } catch {
     const seed = createSeedState();
-    await fs.mkdir(path.dirname(file), { recursive: true });
-    await fs.writeFile(file, JSON.stringify(seed, null, 2));
+    try {
+      await fs.mkdir(path.dirname(file), { recursive: true });
+      await fs.writeFile(file, JSON.stringify(seed, null, 2));
+    } catch {
+      memoryMode = true;
+      memoryState = structuredClone(seed);
+    }
     return seed;
   }
 }
 
 async function saveToFile(state: AppState): Promise<void> {
+  if (memoryMode) {
+    memoryState = structuredClone(state);
+    return;
+  }
   const file = localFile();
-  await fs.mkdir(path.dirname(file), { recursive: true });
-  const tmp = `${file}.tmp`;
-  await fs.writeFile(tmp, JSON.stringify(state, null, 2));
-  await fs.rename(tmp, file);
+  try {
+    await fs.mkdir(path.dirname(file), { recursive: true });
+    const tmp = `${file}.tmp`;
+    await fs.writeFile(tmp, JSON.stringify(state, null, 2));
+    await fs.rename(tmp, file);
+  } catch {
+    memoryMode = true;
+    memoryState = structuredClone(state);
+  }
 }
 
 async function getPool(): Promise<import('pg').Pool> {
